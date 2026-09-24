@@ -1,0 +1,7 @@
+[exports]
+# Globs, relative to the library root. `**` crosses directories.
+paths = [
+  "index.html",
+  "engine/**",
+  "decks/starter/**",
+]
