@@ -1,0 +1,54 @@
+<!doctype html>
+<!--
+  Showcase deck: one slide per layout pattern. Copy a slide file from here
+  when you need that pattern. docs/patterns.md has the catalogue.
+
+  The `slides` array below IS the running order. Reorder or cut slides there.
+  Serve the repo root with any static server, e.g. `python3 -m http.server`,
+  then open http://localhost:8000/decks/showcase/
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Showcase: static slides</title>
+    <link rel="icon" href="assets/logo-light.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../engine/deck.css" />
+  </head>
+  <body>
+    <script>
+      // ES modules and fetch() are blocked on file:// — say so instead of a blank page.
+      if (location.protocol === "file:")
+        document.write('<p style="font:20px/1.5 system-ui;color:#f2f4ef;padding:40px">Serve this repo over HTTP to view the deck: run <code>python3 -m http.server</code> in the repo root, then open http://localhost:8000' + location.pathname.replace(/^.*?(\/decks\/)/, "$1") + "</p>");
+    </script>
+    <script type="module">
+      import { start } from "../../engine/deck.js";
+      import config from "./config.js";
+
+      start({
+        rail: "Static slides · Showcase",
+        store: config,
+        slides: [
+          "slides/01-cover.html",
+          "slides/02-agenda.html",
+          "slides/03-problem.html",
+          "slides/04-boundary.html",
+          "slides/05-numbers.html",
+          "slides/06-code.html",
+          "slides/07-process.html",
+          "slides/08-compare.html",
+          "slides/09-quote.html",
+          "slides/10-divider.html",
+          "slides/11-faq.html",
+          "slides/12-close.html",
+        ],
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!doctype html>
+<!-- The deck index. Add a <li> when you add a deck under decks/. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Slide decks</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="engine/theme.css" />
+    <style>
+      body { margin: 0; padding: 56px 24px; background: var(--paper); color: var(--ink); font-family: var(--font-display); }
+      main { max-width: 720px; margin: 0 auto; }
+      h1 { font-size: 30px; margin: 0 0 32px; }
+      ul { list-style: none; margin: 0; padding: 0; }
+      li { padding: 16px 0; border-bottom: 1px solid var(--line); }
+      a { color: var(--ink); font-weight: 600; font-size: 20px; }
+      .muted { color: var(--muted); }
+      .mono { font-family: var(--font-mono); font-size: 14px; margin-left: 8px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Slide decks</h1>
+      <ul>
+        <li>
+          <a href="decks/showcase/">Showcase</a>
+          <span class="muted">: one slide per layout pattern.</span>
+          <a class="mono muted" href="decks/showcase/?print">print preview</a>
+        </li>
+        <li>
+          <a href="decks/starter/">Starter</a>
+          <span class="muted">: the three-slide template to copy.</span>
+          <a class="mono muted" href="decks/starter/?print">print preview</a>
+        </li>
+      </ul>
+    </main>
+  </body>
+</html>

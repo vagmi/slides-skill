@@ -1,0 +1,41 @@
+<!-- 07 · Process. Four numbered step cards across the top, then a wide-left
+     grid pinned to the bottom: the explanation left, a checklist right. -->
+<section
+  data-section="The workflow"
+  data-title="Four steps to a deck"
+  x-data="{
+    steps: [
+      ['Copy', 'decks/starter → decks/acme'],
+      ['Write', 'one HTML file per slide'],
+      ['Order', 'the slides array in index.html'],
+      ['Preview', 'press P, then print'],
+    ],
+  }"
+>
+  <h2 class="h2 r d2">From empty folder to PDF in <span class="text-gradient">four steps</span>.</h2>
+
+  <div class="grid-4 mt-l r d3">
+    <template x-for="([h, p], n) in steps">
+      <div class="card">
+        <p class="mono text-label" style="font-size: 26px" x-text="String(n + 1).padStart(2, '0')"></p>
+        <p class="h3 mt-s" x-text="h"></p>
+        <p class="small muted mt-xs" x-text="p"></p>
+      </div>
+    </template>
+  </div>
+
+  <div class="grid-wide-left mt-auto items-end">
+    <p class="lead r d4">
+      Nothing is compiled, so nothing is stale. The file you edit is the file the browser
+      runs, and the page you print is the page you presented.
+    </p>
+    <div class="card r d5">
+      <span class="label">Before you present</span>
+      <ul class="dot-list mt-s small">
+        <li>Every slide fits: <code>Deck.checkFit()</code></li>
+        <li>Print preview reads in order</li>
+        <li>Fonts load on the venue Wi-Fi</li>
+      </ul>
+    </div>
+  </div>
+</section>

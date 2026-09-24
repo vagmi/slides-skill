@@ -1,0 +1,27 @@
+<!-- 01 · Cover. Deep and bare: audience name, headline, lead, byline. -->
+<section data-section="Introduction" data-title="Cover" data-tone="deep" data-bare>
+  <div class="cover-frame"></div>
+  <div class="stack h-full relative">
+    <div class="lockup r d1">
+      <span class="h3" x-text="$store.deck.presenter.site"></span>
+      <span class="x">×</span>
+      <span class="logo-slot" x-text="$store.deck.audience.name"></span>
+    </div>
+
+    <div class="my-auto">
+      <div class="accent-bar r d2 mb-m"></div>
+      <h1 class="display r d2 w-wide">
+        The claim in one line. <span class="text-gradient">The payoff after it.</span>
+      </h1>
+      <p class="lead r d3 mt-l w-mid">One sentence that says what the room gets from the next half hour.</p>
+    </div>
+
+    <div class="byline r d4">
+      <span><b x-text="$store.deck.presenter.name"></b> · <span x-text="$store.deck.presenter.role"></span></span>
+      <span class="row gap-s">
+        <span x-text="$store.deck.date"></span>
+        <span class="pill" x-text="$store.deck.presenter.site"></span>
+      </span>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,160 @@
+/* ============================================================
+   THEME — design tokens, the two slide surfaces, reveal animations.
+
+   Restyle a deck by overriding the tokens in :root (in a deck's own
+   <style> block, or in a theme file loaded after this one). Every
+   component reads the surface-aware aliases (--fg, --fg-muted,
+   --card-bg, --border …), so one set of classes works on both the
+   paper surface and the deep surface.
+
+   Stage mechanics live in stage.css. Components in components.css.
+   ============================================================ */
+
+:root {
+  /* —— paper surface (default) —— */
+  --paper: #faf8f3; /* slide background — warm off-white */
+  --card: #ffffff; /* raised surfaces */
+  --ink: #063e2e; /* primary text — deep emerald */
+  --ink-2: #0a5c44; /* secondary heading ink, eyebrow label */
+  --muted: #6b6355; /* muted text */
+  --line: #e6e0d5; /* hairlines, borders */
+
+  /* —— brand accents —— */
+  --accent: #a3e635; /* the accent — lime */
+  --accent-soft: #bef264; /* lighter accent, used on deep slides */
+  --accent-wash: #f0fbdc; /* faint accent fill on paper */
+  --brand: #064e3b; /* solid brand fill — emerald */
+  --warn: #b45309; /* risk / "the trap" callouts */
+
+  /* —— deep surface (covers, dividers, demos, close) —— */
+  --deep: #09231c;
+  --deep-card: #0f2e24;
+  --deep-line: #1d4034;
+  --deep-ink: #f2f4ef;
+  --deep-muted: #8fa198;
+
+  /* —— headline gradient —— */
+  --gradient: linear-gradient(100deg, #064e3b 0%, #10775a 46%, #5b9421 100%);
+  --gradient-deep: linear-gradient(100deg, #bef264 0%, #7dd3a5 100%);
+
+  /* —— the aura painted in the corner of every slide —— */
+  --aura: rgba(163, 230, 53, 0.13);
+  --aura-deep: rgba(163, 230, 53, 0.14);
+  --aura-deep-2: rgba(6, 78, 59, 0.55);
+
+  /* —— code panels (always dark) —— */
+  --code-bg: #0b271f;
+  --code-fg: #dde6df;
+  --code-com: #63887a;
+  --code-key: #bef264;
+  --code-str: #7fd0a6;
+  --code-fn: #a3e635;
+  --code-type: #8ed6c2;
+  --code-num: #e9d68d;
+  --code-prop: #a8c3b6;
+  --code-punc: #87a498;
+
+  /* —— type —— */
+  --font-display: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* —— consumed by stage.css —— */
+  --stage-bg: #061a14; /* letterbox around the stage */
+  --slide-bg: var(--paper);
+}
+
+/* ============================================================
+   SLIDE SURFACES
+   .slide       → warm paper (default)
+   .slide.deep  → near-black emerald, inverted ink
+   The aliases below are what components.css reads.
+   ============================================================ */
+.slide {
+  --fg: var(--ink);
+  --fg-2: var(--ink-2);
+  --fg-muted: var(--muted);
+  --card-bg: var(--card);
+  --border: var(--line);
+  --label: var(--brand);
+  --mark: var(--accent);
+  --wash: var(--accent-wash);
+  --grad: var(--gradient);
+
+  font-family: var(--font-display);
+  color: var(--fg);
+  font-feature-settings: "cv05" 1, "ss01" 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+.slide.deep {
+  --fg: var(--deep-ink);
+  --fg-2: var(--accent-soft);
+  --fg-muted: var(--deep-muted);
+  --card-bg: var(--deep-card);
+  --border: var(--deep-line);
+  --label: var(--accent-soft);
+  --mark: var(--accent-soft);
+  --wash: rgba(163, 230, 53, 0.08);
+  --grad: var(--gradient-deep);
+
+  background: var(--deep);
+}
+
+/* A faint accent aura in the top-right corner — keeps the projected
+   image from reading as a flat rectangle. */
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(820px 560px at 92% -10%, var(--aura), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+.slide.deep::before {
+  background:
+    radial-gradient(760px 520px at 88% -6%, var(--aura-deep), transparent 62%),
+    radial-gradient(900px 640px at 4% 108%, var(--aura-deep-2), transparent 60%);
+}
+.slide.no-aura::before {
+  display: none;
+}
+
+/* ============================================================
+   REVEAL ANIMATIONS — play when a slide becomes .active.
+   Add class "r" to an element and d1..d6 to stagger it.
+   ============================================================ */
+.r {
+  opacity: 0;
+  transform: translateY(22px);
+}
+.slide.active .r {
+  animation: reveal-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+.d1 { animation-delay: 0.04s; }
+.d2 { animation-delay: 0.14s; }
+.d3 { animation-delay: 0.26s; }
+.d4 { animation-delay: 0.38s; }
+.d5 { animation-delay: 0.5s; }
+.d6 { animation-delay: 0.62s; }
+
+@keyframes reveal-up {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Print and print preview: reveals never play, so force every staged
+   element visible. Without this, .r elements print at opacity: 0. */
+.print-preview .r {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+@media print {
+  .r {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}

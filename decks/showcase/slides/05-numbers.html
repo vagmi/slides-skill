@@ -1,0 +1,44 @@
+<!-- 05 · Numbers. Deep surface, three stat cards, then a two-card contrast
+     pinned to the bottom with .mt-auto. -->
+<section
+  data-section="The numbers"
+  data-title="Zero build steps"
+  data-tone="deep"
+  x-data="{
+    stats: [
+      ['0', 'build steps', 'Serve the folder. That is the whole toolchain.'],
+      ['1', 'file per slide', 'Edit one slide without touching the rest of the deck.'],
+      ['1:1', 'screen to PDF', 'Every page prints at exactly 1920×1080.'],
+    ],
+  }"
+>
+  <h2 class="h2 r d2">Tooling is expensive. <span class="text-gradient">Files are cheap.</span></h2>
+  <p class="lead r d2 mt-s w-mid">
+    Most deck tools make you install a pipeline to edit a sentence. This one makes the sentence the file.
+  </p>
+
+  <div class="grid-3 mt-l r d3">
+    <template x-for="[k, h, p] in stats">
+      <div class="card" style="padding: 38px 42px">
+        <p class="stat-value" x-text="k"></p>
+        <p class="stat-label" x-text="h"></p>
+        <p class="small muted mt-s" x-text="p"></p>
+      </div>
+    </template>
+  </div>
+
+  <div class="grid-2 mt-auto">
+    <div class="card r d4">
+      <span class="label muted">The usual way</span>
+      <p class="h4 mt-xs" style="font-weight: 400; opacity: 0.85">
+        Install, compile, serve, then look at the slide. Every step can break before the talk.
+      </p>
+    </div>
+    <div class="card accent r d5">
+      <span class="label">This way</span>
+      <p class="h4 mt-xs" style="font-weight: 400">
+        Edit the file, refresh the browser. Host the folder anywhere that serves files.
+      </p>
+    </div>
+  </div>
+</section>

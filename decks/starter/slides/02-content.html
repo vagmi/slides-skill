@@ -1,0 +1,26 @@
+<!-- 02 · A standard content slide: eyebrow (automatic), headline, lead,
+     then a grid of cards centred in the space left over. -->
+<section
+  data-section="Section name"
+  data-title="Content"
+  x-data="{
+    points: [
+      ['First point', 'One or two sentences. Keep each card to one idea.'],
+      ['Second point', 'Short sentences read faster from the back of the room.'],
+      ['Third point', 'If it needs a paragraph, it needs another slide.'],
+    ],
+  }"
+>
+  <h2 class="h2 r d2 w-wide">A headline that makes <span class="text-gradient">the point</span>.</h2>
+  <p class="lead r d3 mt-s w-mid">A line of setup under the headline.</p>
+
+  <div class="grid-3 my-auto">
+    <template x-for="([h, p], n) in points">
+      <div class="card r" :class="'d' + (n + 3)">
+        <span class="label" x-text="h"></span>
+        <div class="tick mt-s mb-s"></div>
+        <p class="body muted" x-text="p"></p>
+      </div>
+    </template>
+  </div>
+</section>

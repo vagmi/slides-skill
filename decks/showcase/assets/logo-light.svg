@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="312" height="96" viewBox="0 0 312 96" role="img" aria-label="Stage">
+  <rect x="4" y="12" width="72" height="72" rx="18" fill="#064e3b"/>
+  <path d="M24 60 L40 32 L56 60 Z" fill="#bef264"/>
+  <text x="96" y="66" font-family="Inter, system-ui, sans-serif" font-size="52" font-weight="700" letter-spacing="-1.5" fill="#063e2e">stage</text>
+</svg>

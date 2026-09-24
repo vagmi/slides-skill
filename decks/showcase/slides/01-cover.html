@@ -1,0 +1,41 @@
+<!-- 01 · Cover. Deep and bare. Logo lockup at the top, headline centred,
+     byline pinned to the bottom. The hairline frame sits just inside the
+     canvas edge. Names come from config.js through $store.deck. -->
+<section data-section="Introduction" data-title="Cover" data-tone="deep" data-bare>
+  <div class="cover-frame"></div>
+  <div class="stack h-full relative">
+    <div class="lockup r d1">
+      <img src="assets/logo-dark.svg" alt="Stage" />
+      <span class="x">×</span>
+      <template x-if="$store.deck.audience.logo">
+        <img :src="$store.deck.audience.logo" :alt="$store.deck.audience.name" />
+      </template>
+      <template x-if="!$store.deck.audience.logo">
+        <span class="logo-slot" x-text="$store.deck.audience.name"></span>
+      </template>
+    </div>
+
+    <div class="my-auto">
+      <div class="accent-bar r d2 mb-m"></div>
+      <h1 class="display r d2 w-wide">
+        Slides are just pages.
+        <span class="text-gradient">Ship them as files.</span>
+      </h1>
+      <p class="lead r d3 mt-l w-mid">
+        A fixed 1920×1080 stage, a handful of CSS classes, one file per slide.
+        No bundler, no build step, and a PDF that matches the screen.
+      </p>
+    </div>
+
+    <div class="byline r d4" x-data="{ p: $store.deck.presenter }">
+      <span>
+        <b x-text="p.name"></b> · <span x-text="p.role"></span>
+        <span style="margin: 0 14px; opacity: 0.4">|</span><span x-text="p.email"></span>
+      </span>
+      <span class="row gap-s">
+        <span x-text="$store.deck.date"></span>
+        <span class="pill" x-text="p.site"></span>
+      </span>
+    </div>
+  </div>
+</section>

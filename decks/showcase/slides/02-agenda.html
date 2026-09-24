@@ -1,0 +1,26 @@
+<!-- 02 · Agenda. Numbered rows from an x-for. Keep it to five beats. -->
+<section
+  data-section="Introduction · Agenda"
+  data-title="Agenda"
+  x-data="{
+    items: [
+      ['Why a deck should be a folder of files', '3 min'],
+      ['The stage and the slide frame', '5 min'],
+      ['Patterns you can copy', '10 min'],
+      ['Print preview and the PDF', '5 min'],
+      ['Next step', '2 min'],
+    ],
+  }"
+>
+  <div class="accent-bar r d2"></div>
+  <h2 class="h2 r d2 mt-m">Twenty-five minutes, five beats.</h2>
+  <ol class="numbered my-auto">
+    <template x-for="([label, aside], n) in items" :key="n">
+      <li class="r" :class="'d' + Math.min(n + 3, 6)">
+        <span class="num" x-text="String(n + 1).padStart(2, '0')"></span>
+        <span x-text="label"></span>
+        <span class="aside" x-text="aside"></span>
+      </li>
+    </template>
+  </ol>
+</section>

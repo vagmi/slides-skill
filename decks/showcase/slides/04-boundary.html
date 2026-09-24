@@ -1,0 +1,39 @@
+<!-- 04 · Boundary. Two columns and a seam. Use it for "yours / ours",
+     "before / after", "today / with us". -->
+<section
+  data-section="The boundary"
+  data-title="What you write, what the kit does"
+  x-data="{
+    yours: ['The words on each slide', 'The running order', 'Your logo and palette', 'Where it is hosted'],
+    ours: ['The 1920×1080 stage', 'Keyboard and touch navigation', 'Reveal animations', 'Print preview and PDF pages', 'Code highlighting'],
+  }"
+>
+  <h2 class="h2 r d2 w-wide">You write slides. <span class="text-gradient">The kit runs the stage.</span></h2>
+
+  <div class="grid-split grow mt-l items-stretch">
+    <div class="card stack r d3">
+      <div class="accent-bar mb-s"></div>
+      <span class="label">You write</span>
+      <div class="bar-list grow justify-evenly mt-m">
+        <template x-for="y in yours"><p x-text="y"></p></template>
+      </div>
+    </div>
+
+    <div class="center r d4" style="width: 290px">
+      <div class="card accent text-center" style="padding: 30px 24px">
+        <span class="label">The contract</span>
+        <p class="h4 mt-s">One HTML file</p>
+        <p class="small muted mt-xs">per slide, holding</p>
+        <p class="h4 mt-xs mono" style="font-size: 26px">&lt;section&gt;</p>
+      </div>
+    </div>
+
+    <div class="card brand stack r d5">
+      <div class="accent-bar mb-s"></div>
+      <span class="label">The kit runs</span>
+      <div class="bar-list accent grow justify-evenly mt-m">
+        <template x-for="o in ours"><p x-text="o"></p></template>
+      </div>
+    </div>
+  </div>
+</section>

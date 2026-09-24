@@ -1,0 +1,66 @@
+<!-- 06 · Code. Two panels side by side, a callout under the left one and a
+     flow strip along the bottom. The source sits raw in a <textarea>, so
+     markup needs no escaping; code.js dedents and highlights it. -->
+<section data-section="How it works · Code" data-title="A slide is an HTML file">
+  <div class="accent-bar r d2 mb-s"></div>
+  <h2 class="h2 r d2" style="font-size: 56px">
+    You write the slide. <span class="text-gradient">The page lists the order.</span>
+  </h2>
+
+  <div class="grid-2 my-auto items-start">
+    <div class="stack gap-s">
+      <figure class="code-panel sm r d3" data-lang="html" data-caption="slides/02-pricing.html" data-note="one slide">
+        <textarea>
+          <section data-section="Pricing" x-data="{ plans: ['Free', 'Team', 'Scale'] }">
+            <h2 class="h2 r d2">Three plans.</h2>
+            <div class="grid-3 my-auto">
+              <template x-for="p in plans">
+                <div class="card"><p class="h3" x-text="p"></p></div>
+              </template>
+            </div>
+          </section>
+        </textarea>
+      </figure>
+      <div class="card accent r d4" style="padding: 20px 28px">
+        <p class="label">The one rule</p>
+        <p class="small mt-xs">
+          A slide file holds one <code>&lt;section&gt;</code> and nothing else. No scripts run
+          inside it, so it can be moved, cut or reordered freely.
+        </p>
+      </div>
+    </div>
+
+    <figure class="code-panel sm r d4" data-lang="js" data-caption="index.html" data-note="the running order">
+      <textarea>
+        import { start } from "../../engine/deck.js";
+        import config from "./config.js";
+
+        start({
+          rail: "Acme × You",
+          store: config, // → $store.deck
+          slides: [
+            "slides/01-cover.html",
+            "slides/02-pricing.html",
+          ],
+        });
+      </textarea>
+    </figure>
+  </div>
+
+  <div
+    class="flow r d5"
+    x-data="{ chain: [
+      ['index.html', 'lists the slides'],
+      ['loader.js', 'fetches each file'],
+      ['Alpine', 'fills the templates'],
+      ['The browser', 'shows slide 1'],
+    ] }"
+  >
+    <template x-for="([h, p], n) in chain">
+      <div class="step">
+        <p class="mono" style="font-size: 22px; font-weight: 500" x-text="h"></p>
+        <p class="tiny muted mt-xs" x-text="p"></p>
+      </div>
+    </template>
+  </div>
+</section>

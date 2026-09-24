@@ -1,0 +1,45 @@
+<!doctype html>
+<!--
+  Starter deck. Copy this folder to decks/<name>/, then:
+    1. edit config.js (names, date, the ask)
+    2. write one file per slide in slides/
+    3. list them in the `slides` array below, in running order
+  Serve the repo root (python3 -m http.server) and open /decks/<name>/.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Deck title</title>
+    <link rel="icon" href="data:," />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../engine/deck.css" />
+  </head>
+  <body>
+    <script>
+      // ES modules and fetch() are blocked on file:// — say so instead of a blank page.
+      if (location.protocol === "file:")
+        document.write('<p style="font:20px/1.5 system-ui;color:#f2f4ef;padding:40px">Serve this repo over HTTP to view the deck: run <code>python3 -m http.server</code> in the repo root, then open http://localhost:8000' + location.pathname.replace(/^.*?(\/decks\/)/, "$1") + "</p>");
+    </script>
+    <script type="module">
+      import { start } from "../../engine/deck.js";
+      import config from "./config.js";
+
+      start({
+        title: config.title,
+        rail: config.title,
+        store: config,
+        slides: [
+          "slides/01-cover.html",
+          "slides/02-content.html",
+          "slides/03-close.html",
+        ],
+      });
+    </script>
+  </body>
+</html>

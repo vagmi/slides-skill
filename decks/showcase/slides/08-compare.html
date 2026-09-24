@@ -1,0 +1,30 @@
+<!-- 08 · Comparison table. Mark the row that carries the point with .hl. -->
+<section
+  data-section="The options"
+  data-title="How the options compare"
+  x-data="{
+    rows: [
+      { name: 'Framework deck', tools: 'Bundler + dev server', layout: 'Reflows per screen', host: 'Build output' },
+      { name: 'Slide editor', tools: 'None', layout: 'Mostly fixed', host: 'Vendor account' },
+      { name: 'This kit', tools: 'None', layout: 'Fixed 1920×1080', host: 'Any static host', hl: true },
+    ],
+  }"
+>
+  <h2 class="h2 r d2">Three ways to ship a deck.</h2>
+  <table class="table my-auto r d3">
+    <thead>
+      <tr><th>Approach</th><th>Tooling</th><th>Layout</th><th>Runs on</th></tr>
+    </thead>
+    <tbody>
+      <template x-for="r in rows">
+        <tr :class="r.hl && 'hl'">
+          <td class="strong" x-text="r.name"></td>
+          <td x-text="r.tools"></td>
+          <td x-text="r.layout"></td>
+          <td x-text="r.host"></td>
+        </tr>
+      </template>
+    </tbody>
+  </table>
+  <p class="small muted r d4">Pick the one whose failure mode you can live with on the day.</p>
+</section>
