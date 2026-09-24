@@ -54,6 +54,38 @@ decks/
    press **P** for the print preview.
 7. Add the deck to the root `index.html`.
 
+## In urai: building a deck in a canvas
+
+In urai there is no shell and no local server. A deck is a **canvas**: one
+directory, `/canvas/<name>/`, served beside the chat. It uses a flatter layout,
+with the deck page at the canvas root and the engine beside it:
+
+```
+/canvas/<name>/index.html     ← the deck page (you write it)
+/canvas/<name>/config.js      ← copied from the starter, then edited
+/canvas/<name>/slides/NN-slug.html
+/canvas/<name>/engine/…       ← copied, never edited
+```
+
+1. Copy the engine and the starter's config and slides in one call:
+   ```
+   copy_library_files(library: "slides-skill", canvas: "<name>", copies: [
+     { from: "engine/",                  to: "engine/" },
+     { from: "decks/starter/config.js",  to: "" },
+     { from: "decks/starter/slides/",    to: "slides/" }
+   ])
+   ```
+2. Edit `config.js`, then write each slide with `write_file`. Read the
+   closest pattern from `decks/showcase/slides/` with `read_library_file`
+   first (see [docs/patterns.md](docs/patterns.md)).
+3. Write `index.html` **last**, because the canvas opens as soon as it exists.
+   Start from `decks/starter/index.html`, but import `./engine/deck.js` and
+   link `engine/deck.css`, not `../../engine/`.
+4. Links inside a canvas must name the file: `decks/q3/index.html`, never
+   `decks/q3/`. A path ending in `/` does not resolve.
+5. Paths may be at most four levels deep inside the canvas. `slides/NN.html`
+   is two.
+
 ## Hard rules
 
 - **Design at 1920×1080.** Every size is in stage pixels. Never use `vw`,
