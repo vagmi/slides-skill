@@ -7,10 +7,10 @@ on the stage.
 ```html
 <!-- 04 · Boundary. What this slide is for, in one line. -->
 <section data-section="The boundary" data-title="Yours and ours">
-  <h2 class="h2 r d2">You write slides. <span class="text-gradient">The kit runs the stage.</span></h2>
-  <div class="grid-2 my-auto">
+  <h2 class="text-h2 r d2">You write slides. <span class="text-gradient">The kit runs the stage.</span></h2>
+  <div class="grid grid-cols-2 gap-6 my-auto">
     <div class="card r d3">…</div>
-    <div class="card accent r d4">…</div>
+    <div class="card card-accent r d4">…</div>
   </div>
 </section>
 ```
@@ -41,9 +41,9 @@ Add `r` to an element to make it rise into place when its slide becomes
 active. Add `d1`…`d6` to stagger it. The eyebrow row is already `r d1`.
 
 ```html
-<h2 class="h2 r d2">…</h2>
-<p class="lead r d3">…</p>
-<div class="grid-3 r d4">…</div>
+<h2 class="text-h2 r d2">…</h2>
+<p class="text-lead text-fg-muted r d3">…</p>
+<div class="grid grid-cols-3 gap-6 r d4">…</div>
 ```
 
 Typical order: accent bar and headline `d2`, lead `d3`, main body `d3`–`d5`,
@@ -65,12 +65,12 @@ markup from data. Keep the data on the `<section>`:
     ],
   }"
 >
-  <div class="grid-2 my-auto">
+  <div class="grid grid-cols-2 gap-6 my-auto">
     <template x-for="([k, h, p], n) in stats">
       <div class="card r" :class="'d' + (n + 3)">
         <p class="stat-value" x-text="k"></p>
         <p class="stat-label" x-text="h"></p>
-        <p class="small muted mt-s" x-text="p"></p>
+        <p class="text-small text-fg-muted mt-4" x-text="p"></p>
       </div>
     </template>
   </div>
@@ -99,7 +99,7 @@ registered as an Alpine store. Any slide can read it:
 
 ```html
 <b x-text="$store.deck.presenter.name"></b>
-<h2 class="display" x-text="$store.deck.ask"></h2>
+<h2 class="text-display" x-text="$store.deck.ask"></h2>
 <div x-data="{ p: $store.deck.presenter }"><span x-text="p.email"></span></div>
 ```
 
@@ -111,6 +111,7 @@ dates and the closing ask. Put nothing there that only one slide uses.
 - `<script>` tags. Fragments are inserted as markup, so their scripts never
   run. Put behaviour in the engine, or use Alpine directives.
 - `<link>` / `<style>` blocks for one slide. They work, but they leak to the
-  whole deck. Prefer utility classes and a small `style=""`.
+  whole deck. Prefer Tailwind utilities, with arbitrary values (`w-[290px]`)
+  for one-off numbers.
 - Relative asset paths resolve against **the deck page**, not the fragment.
   So write `assets/logo.svg`, not `../assets/logo.svg`.

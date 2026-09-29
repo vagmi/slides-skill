@@ -8,15 +8,15 @@ one, copy the file into your deck, rename it, change the words and the
 | --- | --- | --- | --- |
 | Open the talk | `01-cover.html` | deep, bare | logo lockup · `display` headline · lead · byline pinned to the bottom |
 | Set the agenda | `02-agenda.html` | paper | headline · `numbered` rows from `x-for`, with durations as `aside` |
-| Name the problem | `03-problem.html` | paper | headline · lead · `grid-3` cards, the last one `card warn` |
-| Draw a line: yours / ours, before / after | `04-boundary.html` | paper | `grid-split`: plain card · `card accent` seam · `card brand` |
-| Land numbers | `05-numbers.html` | deep | headline · lead · `grid-3` stat cards · `grid-2` contrast at `mt-auto` |
-| Show code | `06-code.html` | paper | `grid-2` of `code-panel sm` · `card accent` callout · `flow` strip |
+| Name the problem | `03-problem.html` | paper | headline · lead · `grid-cols-3` cards, the last one `card-warn` |
+| Draw a line: yours / ours, before / after | `04-boundary.html` | paper | three-column grid: plain card · `card-accent` seam · `card-brand` |
+| Land numbers | `05-numbers.html` | deep | headline · lead · `grid-cols-3` stat cards · `grid-cols-2` contrast at `mt-auto` |
+| Show code | `06-code.html` | paper | `grid-cols-2` of `code-panel sm` · `card-accent` callout · `flow` strip |
 | Explain a process | `07-process.html` | paper | `grid-4` numbered step cards · `grid-wide-left` lead + checklist |
 | Compare options | `08-compare.html` | paper | `table` from `x-for`, with the winning row `hl` |
 | Pause on a principle | `09-quote.html` | deep, bare | `quote` centred with `my-auto` |
 | Start a section | `10-divider.html` | deep, bare | `big-num` letter or number · `h1` · one lead line |
-| Answer questions | `11-faq.html` | paper | `grid-2` of question cards (2×2) |
+| Answer questions | `11-faq.html` | paper | `grid-cols-2` of question cards (2×2) |
 | Close with the ask | `12-close.html` | deep, bare | logo · label · `display` ask from `$store` · byline |
 | Play a recording | see [code-and-media.md](code-and-media.md) | deep, full | video under a title scrim |
 

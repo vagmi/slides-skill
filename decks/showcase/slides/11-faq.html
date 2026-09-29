@@ -7,17 +7,17 @@
       ['Does it work offline?', 'Not as shipped: Alpine, highlight.js and the fonts come from CDNs. Vendor them into the repo and change engine/libs.js for a venue with no network.'],
       ['Why does it need a server?', 'Slides are fetched and the engine is ES modules, and browsers block both on file://. Any static server works.'],
       ['How do I get a PDF?', 'Press P for the print preview, then Print / Save PDF. Margins None, background graphics on.'],
-      ['Can I use my brand?', 'Override the tokens from theme.css in a style block in the deck. Every component reads them.'],
+      ['Can I use my brand?', 'Override the --color-* tokens from theme.css in a style block in the deck. Every utility and component reads them.'],
     ],
   }"
 >
-  <h2 class="h2 r d2" style="line-height: 1">Questions we always get</h2>
-  <div class="grid-2 my-auto">
+  <h2 class="text-h2 leading-none r d2">Questions we always get</h2>
+  <div class="grid grid-cols-2 gap-6 my-auto">
     <template x-for="([q, a], n) in faqs">
-      <div class="card r" :class="n < 2 ? 'd3' : 'd4'" style="padding: 32px 40px">
-        <p class="h3" x-text="q"></p>
-        <div class="tick mt-s mb-s"></div>
-        <p class="small muted" x-text="a"></p>
+      <div class="card px-10 py-8 r" :class="n < 2 ? 'd3' : 'd4'">
+        <p class="text-h3" x-text="q"></p>
+        <div class="tick mt-4 mb-4"></div>
+        <p class="text-small text-fg-muted" x-text="a"></p>
       </div>
     </template>
   </div>

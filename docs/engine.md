@@ -1,15 +1,17 @@
 # Engine internals
 
-The engine is `engine/`: plain CSS and native ES modules, shared by every
-deck. There is no build step. Browsers load the files exactly as they are
-written.
+The engine is `engine/`: native ES modules and Tailwind CSS source, shared
+by every deck. There is no build step. Browsers load the modules exactly as
+they are written, and the Tailwind browser build compiles the CSS in the
+page.
 
 ## Modules
 
 | File | Job |
 | --- | --- |
 | `deck.js` | Entry point. `start({ title, rail, store, slides })` runs the steps below and exposes `window.Deck`. |
-| `libs.js` | The only third-party imports: pinned CDN ES module builds of Alpine and highlight.js. |
+| `libs.js` | The only third-party code: pinned CDN builds of Alpine, highlight.js and the Tailwind browser build. |
+| `styles.js` | Adds the Tailwind `<script>`, fetches the engine's CSS files and puts them in one `<style type="text/tailwindcss">` at the top of `<head>`. Waits until Tailwind has compiled them. |
 | `loader.js` | Fetches each fragment in parallel, keeps the order, and wraps each one in `.frame` + eyebrow (or `.full-slot`). It fills empty `.rail` spans and adds the preview page badge. A failed fetch becomes an on-screen error slide. |
 | `nav.js` | Builds the viewport, stage, progress bar, counter and help overlay. Scales the stage (`translate + scale`). Handles keys, clicks, swipes and `#N`. Fires `slide:enter` on the slide that becomes active and pauses media elsewhere. |
 | `video.js` | Expands `.video-slide` into the player and title scrim, and wires play, ended and `slide:enter`. |
@@ -20,25 +22,34 @@ written.
 Order of work in `start()`:
 
 ```
-fetch fragments → frame them → build stage + nav → video slides
+fetch fragments ‖ load Tailwind + engine CSS → frame them → build stage + nav → video slides
 → code panels → Alpine.store("deck", store) + Alpine.start()
-→ code panels again (for any rendered by x-for) → print preview
+→ code panels again (for any rendered by x-for) → wait a frame for
+Tailwind to build the new classes → print preview
 → window.Deck → "deck:ready" event
 ```
 
 ## CSS files
 
-`deck.css` imports them in this order. The order matters:
+They are Tailwind source, not plain CSS: they use `@theme`, `@apply` and
+`@layer`, so a deck never `<link>`s them. `styles.js` joins them in this
+order:
 
-| File | Contents |
-| --- | --- |
-| `theme.css` | tokens, surface aliases, the aura, reveal animations |
-| `stage.css` | 1920×1080 stage, slide stacking, `.frame`, `@media print` |
-| `type.css` | type scale, text colours, markers |
-| `components.css` | cards, lists, numbered rows, stats, pills, flow, quote, table |
-| `media.css` | code panels, highlight.js colour map, video, eyebrow, cover furniture |
-| `layout.css` | flex, grid, gap and spacing utilities. Loaded late so they win. |
-| `chrome.css` | progress bar, counter, help, print preview |
+| File | Layer | Contents |
+| --- | --- | --- |
+| `theme.css` | `@theme`, `base` | tokens (colours, type scale, measures), the surfaces, the aura, reveal animations |
+| `stage.css` | `base` | 1920×1080 stage, slide stacking, `.frame`, `@media print` |
+| `components.css` | `components` | labels, markers, cards, lists, numbered rows, stats, pills, flow, quote, table |
+| `media.css` | `components` | code panels, highlight.js colour map, video, eyebrow, cover furniture |
+| `chrome.css` | `components` | progress bar, counter, help, print preview |
+
+Tailwind's cascade layers run `theme → base → components → utilities`, so a
+utility on a slide beats any engine rule, and the engine beats preflight.
+
+Tailwind generates utilities for every `class` in the DOM and watches for
+new ones, including slides fetched later and classes Alpine adds. Two limits
+of the browser build: it cannot resolve `@import` (so the engine files never
+contain the word, not even in a comment), and it does not run plugins.
 
 ## Console API: `window.Deck`
 
@@ -79,8 +90,10 @@ Fragments cannot carry scripts. To add behaviour:
 
 - Alpine `3.17.4`: `https://cdn.jsdelivr.net/npm/alpinejs@3.17.4/dist/module.esm.min.js`
 - highlight.js `11.12.0`: `https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.12.0/es/highlight.min.js`
+- Tailwind `4.3.3`: `https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3`
+  (a classic script, not a module; `styles.js` adds it)
 
-Only use CDN URLs that serve an **ES module** with CORS headers
+Apart from Tailwind, only use CDN URLs that serve an **ES module** with CORS headers
 (jsDelivr's `/npm/` and esm.sh both do). To add a library, add an `export`
 line to `libs.js` and import it from there. Never scatter CDN URLs through
 the other modules.
@@ -90,9 +103,9 @@ the other modules.
 The CDN libraries and Google Fonts need a network. For a venue without
 one:
 
-1. Download the two module files into `engine/vendor/`, then point
-   `libs.js` at `./vendor/alpine.esm.min.js` and
-   `./vendor/highlight.min.js`.
+1. Download the three files into `engine/vendor/`, then point `libs.js`
+   at `./vendor/alpine.esm.min.js`, `./vendor/highlight.min.js` and
+   `./vendor/tailwind-browser.js`.
 2. Self-host the fonts. Download the woff2 files into `engine/fonts/`, add
    `@font-face` rules, and remove the Google Fonts `<link>` from the deck.
 3. You still need a local static server: `python3 -m http.server`.

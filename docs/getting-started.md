@@ -27,7 +27,7 @@ cp -r decks/starter decks/acme
 
 ```
 decks/acme/
-  index.html        ← head, fonts, deck.css, and the start({...}) call
+  index.html        ← head, fonts and the start({...}) call (the engine loads Tailwind and its CSS)
   config.js         ← names, date, the ask → $store.deck in every slide
   slides/
     01-cover.html   ← one <section> per file

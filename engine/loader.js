@@ -41,8 +41,8 @@ function errorSlide(url, err) {
   sec.dataset.title = url;
   const hint = String(err.message || err);
   sec.innerHTML =
-    `<h2 class="h2">Could not load <span class="mono">${url}</span></h2>` +
-    `<p class="lead mt-m w-mid">${hint}</p>`;
+    `<h2 class="text-h2">Could not load <span class="font-mono">${url}</span></h2>` +
+    `<p class="text-lead text-fg-muted mt-8 max-w-mid">${hint}</p>`;
   return sec;
 }
 

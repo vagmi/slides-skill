@@ -11,15 +11,15 @@
     ],
   }"
 >
-  <h2 class="h2 r d2 w-wide">A headline that makes <span class="text-gradient">the point</span>.</h2>
-  <p class="lead r d3 mt-s w-mid">A line of setup under the headline.</p>
+  <h2 class="text-h2 r d2 max-w-wide">A headline that makes <span class="text-gradient">the point</span>.</h2>
+  <p class="text-lead text-fg-muted r d3 mt-4 max-w-mid">A line of setup under the headline.</p>
 
-  <div class="grid-3 my-auto">
+  <div class="grid grid-cols-3 gap-6 my-auto">
     <template x-for="([h, p], n) in points">
       <div class="card r" :class="'d' + (n + 3)">
         <span class="label" x-text="h"></span>
-        <div class="tick mt-s mb-s"></div>
-        <p class="body muted" x-text="p"></p>
+        <div class="tick mt-4 mb-4"></div>
+        <p class="text-body text-fg-muted" x-text="p"></p>
       </div>
     </template>
   </div>

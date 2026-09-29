@@ -1,6 +1,6 @@
 # Slides skill
 
-> Presentation decks as static files: HTML fragments, one per slide, on a fixed 1920×1080 stage that scales to any screen and prints to a PDF with one slide per page. There is no build step. The engine is plain ES modules, and Alpine.js (templating) and highlight.js (code) load from a CDN. Serve the repo root with any static server (`python3 -m http.server`). The page does not work from file://.
+> Presentation decks as static files: HTML fragments, one per slide, on a fixed 1920×1080 stage that scales to any screen and prints to a PDF with one slide per page. There is no build step. The engine is plain ES modules, Tailwind CSS v4 (the browser build), Alpine.js (templating) and highlight.js (code) load from a CDN. Slides are styled with Tailwind utilities plus a few component classes. Serve the repo root with any static server (`python3 -m http.server`). The page does not work from file://.
 
 Read AGENT.md first for the rules. Then use the docs below as the task needs them. Every path is relative to the repo root.
 
@@ -12,14 +12,14 @@ Read AGENT.md first for the rules. Then use the docs below as the task needs the
 ## Writing slides
 
 - [Slide format](slide-format.md): the fragment file, the `data-*` attributes on `<section>` (section, title, tone, bare, full, rail), Alpine `x-data` / `x-for` / `x-text`, `$store.deck` from config.js, and reveal animations (`r d1…d6`).
-- [Layout](layout.md): the frame, vertical rhythm (`my-auto`, `mt-auto`), stacks, rows, grids, gaps, spacing and widths.
-- [Components](components.md): the type scale, text colours, cards, lists, numbered rows, stats, pills, flows, quotes, tables and cover furniture.
+- [Layout](layout.md): Tailwind on a fixed stage (no responsive variants), the frame, vertical rhythm (`my-auto`, `mt-auto`), grid and flex recipes, spacing and widths.
+- [Components](components.md): the surface-aware colours (`text-fg-muted`, `bg-surface`, `border-edge`), the type scale (`text-h2` …), cards, lists, numbered rows, stats, pills, flows, quotes, tables and cover furniture.
 - [Patterns](patterns.md): which showcase slide to copy for each need (cover, agenda, problem, boundary, numbers, code, process, compare, quote, divider, FAQ, close).
 - [Code and media](code-and-media.md): code panels with highlight.js, full-bleed video slides, images and logos.
 
 ## Look and output
 
-- [Theming](theming.md): design tokens, the paper and deep surfaces, and how to rebrand a single deck.
+- [Theming](theming.md): the `@theme` tokens (`--color-*`, `--text-*`), the paper and deep surfaces, and how to rebrand a single deck.
 - [Print and PDF](print.md): print preview (P or `?print`), Save as PDF settings, the fit check (`Deck.checkFit()` or `?fit`), and verifying with headless Chrome.
 
 ## Engine

@@ -1,160 +1,220 @@
 /* ============================================================
    THEME — design tokens, the two slide surfaces, reveal animations.
+   Tailwind source: styles.js compiles it with the rest of the engine.
 
-   Restyle a deck by overriding the tokens in :root (in a deck's own
-   <style> block, or in a theme file loaded after this one). Every
-   component reads the surface-aware aliases (--fg, --fg-muted,
-   --card-bg, --border …), so one set of classes works on both the
-   paper surface and the deep surface.
+   Every token in @theme is also a Tailwind utility:
+     --color-brand   → bg-brand, text-brand, border-brand/40 …
+     --text-h2       → text-h2 (size, leading, tracking, weight)
+     --font-mono     → font-mono
+     --container-mid → max-w-mid
 
-   Stage mechanics live in stage.css. Components in components.css.
+   Restyle a deck by overriding tokens on :root in the deck's own
+   <style> block (see docs/theming.md). Slides use the surface-aware
+   colours (fg, fg-2, fg-muted, surface, edge, label, mark, wash),
+   which .slide.deep flips, so one set of classes reads right on
+   the paper surface and on the deep surface.
    ============================================================ */
 
-:root {
+@theme static {
   /* —— paper surface (default) —— */
-  --paper: #faf8f3; /* slide background — warm off-white */
-  --card: #ffffff; /* raised surfaces */
-  --ink: #063e2e; /* primary text — deep emerald */
-  --ink-2: #0a5c44; /* secondary heading ink, eyebrow label */
-  --muted: #6b6355; /* muted text */
-  --line: #e6e0d5; /* hairlines, borders */
+  --color-paper: #faf8f3; /* slide background — warm off-white */
+  --color-card: #ffffff; /* raised surfaces */
+  --color-ink: #063e2e; /* primary text — deep emerald */
+  --color-ink-2: #0a5c44; /* secondary heading ink, eyebrow label */
+  --color-muted: #6b6355; /* muted text */
+  --color-line: #e6e0d5; /* hairlines, borders */
 
   /* —— brand accents —— */
-  --accent: #a3e635; /* the accent — lime */
-  --accent-soft: #bef264; /* lighter accent, used on deep slides */
-  --accent-wash: #f0fbdc; /* faint accent fill on paper */
-  --brand: #064e3b; /* solid brand fill — emerald */
-  --warn: #b45309; /* risk / "the trap" callouts */
+  --color-accent: #a3e635; /* the accent — lime */
+  --color-accent-soft: #bef264; /* lighter accent, used on deep slides */
+  --color-accent-wash: #f0fbdc; /* faint accent fill on paper */
+  --color-brand: #064e3b; /* solid brand fill — emerald */
+  --color-warn: #b45309; /* risk / "the trap" callouts */
 
   /* —— deep surface (covers, dividers, demos, close) —— */
-  --deep: #09231c;
-  --deep-card: #0f2e24;
-  --deep-line: #1d4034;
-  --deep-ink: #f2f4ef;
-  --deep-muted: #8fa198;
+  --color-deep: #09231c;
+  --color-deep-card: #0f2e24;
+  --color-deep-line: #1d4034;
+  --color-deep-ink: #f2f4ef;
+  --color-deep-muted: #8fa198;
 
-  /* —— headline gradient —— */
-  --gradient: linear-gradient(100deg, #064e3b 0%, #10775a 46%, #5b9421 100%);
-  --gradient-deep: linear-gradient(100deg, #bef264 0%, #7dd3a5 100%);
-
-  /* —— the aura painted in the corner of every slide —— */
-  --aura: rgba(163, 230, 53, 0.13);
-  --aura-deep: rgba(163, 230, 53, 0.14);
-  --aura-deep-2: rgba(6, 78, 59, 0.55);
-
-  /* —— code panels (always dark) —— */
-  --code-bg: #0b271f;
-  --code-fg: #dde6df;
-  --code-com: #63887a;
-  --code-key: #bef264;
-  --code-str: #7fd0a6;
-  --code-fn: #a3e635;
-  --code-type: #8ed6c2;
-  --code-num: #e9d68d;
-  --code-prop: #a8c3b6;
-  --code-punc: #87a498;
+  /* —— surface-aware: paper values here, flipped by .slide.deep —— */
+  --color-fg: var(--color-ink); /* text */
+  --color-fg-2: var(--color-ink-2); /* secondary heading ink */
+  --color-fg-muted: var(--color-muted); /* muted text */
+  --color-surface: var(--color-card); /* card fill */
+  --color-edge: var(--color-line); /* borders, hairlines */
+  --color-label: var(--color-brand); /* mono labels */
+  --color-mark: var(--color-accent); /* accent bars, dots, rules */
+  --color-wash: var(--color-accent-wash); /* faint accent fill */
 
   /* —— type —— */
   --font-display: "Inter", system-ui, sans-serif;
+  --font-sans: var(--font-display);
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  /* —— consumed by stage.css —— */
-  --stage-bg: #061a14; /* letterbox around the stage */
-  --slide-bg: var(--paper);
+  /* —— type scale, in stage pixels —— */
+  --text-display: 100px;
+  --text-display--line-height: 1.03;
+  --text-display--letter-spacing: -0.035em;
+  --text-display--font-weight: 700;
+  --text-h1: 80px;
+  --text-h1--line-height: 1.05;
+  --text-h1--letter-spacing: -0.03em;
+  --text-h1--font-weight: 700;
+  --text-h2: 60px;
+  --text-h2--line-height: 1.08;
+  --text-h2--letter-spacing: -0.025em;
+  --text-h2--font-weight: 600;
+  --text-h3: 36px;
+  --text-h3--line-height: 1.15;
+  --text-h3--letter-spacing: -0.01em;
+  --text-h3--font-weight: 600;
+  --text-h4: 30px;
+  --text-h4--line-height: 1.2;
+  --text-h4--font-weight: 600;
+  --text-lead: 34px;
+  --text-lead--line-height: 1.42;
+  --text-body: 28px;
+  --text-body--line-height: 1.42;
+  --text-small: 24px;
+  --text-small--line-height: 1.4;
+  --text-tiny: 20px;
+  --text-tiny--line-height: 1.4;
+
+  /* —— measures: keep long lines readable —— */
+  --container-narrow: 1100px;
+  --container-mid: 1400px;
+  --container-wide: 1560px;
 }
 
-/* ============================================================
-   SLIDE SURFACES
-   .slide       → warm paper (default)
-   .slide.deep  → near-black emerald, inverted ink
-   The aliases below are what components.css reads.
-   ============================================================ */
-.slide {
-  --fg: var(--ink);
-  --fg-2: var(--ink-2);
-  --fg-muted: var(--muted);
-  --card-bg: var(--card);
-  --border: var(--line);
-  --label: var(--brand);
-  --mark: var(--accent);
-  --wash: var(--accent-wash);
-  --grad: var(--gradient);
+@layer base {
+  :root {
+    --deck-styles: 1; /* styles.js waits for this */
 
-  font-family: var(--font-display);
-  color: var(--fg);
-  font-feature-settings: "cv05" 1, "ss01" 1;
-  -webkit-font-smoothing: antialiased;
-}
+    /* —— headline gradient —— */
+    --gradient: linear-gradient(100deg, #064e3b 0%, #10775a 46%, #5b9421 100%);
+    --gradient-deep: linear-gradient(100deg, #bef264 0%, #7dd3a5 100%);
 
-.slide.deep {
-  --fg: var(--deep-ink);
-  --fg-2: var(--accent-soft);
-  --fg-muted: var(--deep-muted);
-  --card-bg: var(--deep-card);
-  --border: var(--deep-line);
-  --label: var(--accent-soft);
-  --mark: var(--accent-soft);
-  --wash: rgba(163, 230, 53, 0.08);
-  --grad: var(--gradient-deep);
+    /* —— the aura painted in the corner of every slide —— */
+    --aura: rgba(163, 230, 53, 0.13);
+    --aura-deep: rgba(163, 230, 53, 0.14);
+    --aura-deep-2: rgba(6, 78, 59, 0.55);
 
-  background: var(--deep);
-}
+    /* —— code panels (always dark) —— */
+    --code-bg: #0b271f;
+    --code-fg: #dde6df;
+    --code-com: #63887a;
+    --code-key: #bef264;
+    --code-str: #7fd0a6;
+    --code-fn: #a3e635;
+    --code-type: #8ed6c2;
+    --code-num: #e9d68d;
+    --code-prop: #a8c3b6;
+    --code-punc: #87a498;
 
-/* A faint accent aura in the top-right corner — keeps the projected
-   image from reading as a flat rectangle. */
-.slide::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(820px 560px at 92% -10%, var(--aura), transparent 60%);
-  pointer-events: none;
-  z-index: 0;
-}
-.slide.deep::before {
-  background:
-    radial-gradient(760px 520px at 88% -6%, var(--aura-deep), transparent 62%),
-    radial-gradient(900px 640px at 4% 108%, var(--aura-deep-2), transparent 60%);
-}
-.slide.no-aura::before {
-  display: none;
-}
+    /* —— consumed by stage.css —— */
+    --stage-bg: #061a14; /* letterbox around the stage */
+  }
 
-/* ============================================================
-   REVEAL ANIMATIONS — play when a slide becomes .active.
-   Add class "r" to an element and d1..d6 to stagger it.
-   ============================================================ */
-.r {
-  opacity: 0;
-  transform: translateY(22px);
+  /* ============================================================
+     SLIDE SURFACES
+     .slide       → warm paper (default)
+     .slide.deep  → near-black emerald, inverted ink
+     ============================================================ */
+  .slide {
+    --grad: var(--gradient);
+    background: var(--color-paper);
+    font-family: var(--font-display);
+    line-height: normal; /* not preflight's 1.5: text-* sizes set their own */
+    color: var(--color-fg);
+    font-feature-settings:
+      "cv05" 1,
+      "ss01" 1;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .slide.deep {
+    --color-fg: var(--color-deep-ink);
+    --color-fg-2: var(--color-accent-soft);
+    --color-fg-muted: var(--color-deep-muted);
+    --color-surface: var(--color-deep-card);
+    --color-edge: var(--color-deep-line);
+    --color-label: var(--color-accent-soft);
+    --color-mark: var(--color-accent-soft);
+    --color-wash: rgba(163, 230, 53, 0.08);
+    --grad: var(--gradient-deep);
+    background: var(--color-deep);
+  }
+
+  /* A faint accent aura in the top-right corner — keeps the projected
+     image from reading as a flat rectangle. */
+  .slide::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(820px 560px at 92% -10%, var(--aura), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .slide.deep::before {
+    background:
+      radial-gradient(760px 520px at 88% -6%, var(--aura-deep), transparent 62%),
+      radial-gradient(900px 640px at 4% 108%, var(--aura-deep-2), transparent 60%);
+  }
+  .slide.no-aura::before {
+    display: none;
+  }
+
+  /* ============================================================
+     REVEAL ANIMATIONS — play when a slide becomes .active.
+     Add class "r" to an element and d1..d6 to stagger it.
+     ============================================================ */
+  .r {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  .slide.active .r {
+    animation: reveal-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  }
+  .d1 {
+    animation-delay: 0.04s;
+  }
+  .d2 {
+    animation-delay: 0.14s;
+  }
+  .d3 {
+    animation-delay: 0.26s;
+  }
+  .d4 {
+    animation-delay: 0.38s;
+  }
+  .d5 {
+    animation-delay: 0.5s;
+  }
+  .d6 {
+    animation-delay: 0.62s;
+  }
+
+  /* Print and print preview: reveals never play, so force every staged
+     element visible. Without this, .r elements print at opacity: 0. */
+  .print-preview .r {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  @media print {
+    .r {
+      opacity: 1 !important;
+      transform: none !important;
+      animation: none !important;
+    }
+  }
 }
-.slide.active .r {
-  animation: reveal-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
-}
-.d1 { animation-delay: 0.04s; }
-.d2 { animation-delay: 0.14s; }
-.d3 { animation-delay: 0.26s; }
-.d4 { animation-delay: 0.38s; }
-.d5 { animation-delay: 0.5s; }
-.d6 { animation-delay: 0.62s; }
 
 @keyframes reveal-up {
   to {
     opacity: 1;
     transform: none;
-  }
-}
-
-/* Print and print preview: reveals never play, so force every staged
-   element visible. Without this, .r elements print at opacity: 0. */
-.print-preview .r {
-  opacity: 1;
-  transform: none;
-  animation: none;
-}
-@media print {
-  .r {
-    opacity: 1 !important;
-    transform: none !important;
-    animation: none !important;
   }
 }

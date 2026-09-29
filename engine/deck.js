@@ -13,7 +13,8 @@
 
    The slides array IS the running order. Each entry is an HTML
    fragment (see loader.js). Order of work:
-     fetch fragments → frame them → video slides → Alpine
+     Tailwind + engine CSS (in parallel with) fetch fragments →
+     frame them → video slides → Alpine
      (x-data, x-for, x-text …) → code highlighting → stage + nav
      → print preview.
 
@@ -21,6 +22,7 @@
    from file://). No build step, no install.
    ============================================================ */
 import { Alpine } from "./libs.js";
+import { loadStyles, settled } from "./styles.js";
 import { loadSlides } from "./loader.js";
 import { createNav } from "./nav.js";
 import { highlightAll } from "./code.js";
@@ -31,7 +33,7 @@ import { checkFit } from "./fit-check.js";
 export async function start({ rail = "", store = {}, slides = [], title } = {}) {
   if (title) document.title = title;
 
-  const els = await loadSlides(slides, rail);
+  const [els] = await Promise.all([loadSlides(slides, rail), loadStyles()]);
 
   // Build the stage first so Alpine initialises slides in the live DOM.
   const nav = createNav(els);
@@ -43,6 +45,7 @@ export async function start({ rail = "", store = {}, slides = [], title } = {}) 
   Alpine.start();
   await new Promise(requestAnimationFrame);
   highlightAll(nav.stage); // panels rendered by x-for
+  await settled(); // Tailwind has built the classes Alpine rendered
 
   installPreview(nav);
 

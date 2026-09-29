@@ -1,5 +1,5 @@
 <!-- 05 · Numbers. Deep surface, three stat cards, then a two-card contrast
-     pinned to the bottom with .mt-auto. -->
+     pinned to the bottom with mt-auto. -->
 <section
   data-section="The numbers"
   data-title="Zero build steps"
@@ -12,31 +12,31 @@
     ],
   }"
 >
-  <h2 class="h2 r d2">Tooling is expensive. <span class="text-gradient">Files are cheap.</span></h2>
-  <p class="lead r d2 mt-s w-mid">
+  <h2 class="text-h2 r d2">Tooling is expensive. <span class="text-gradient">Files are cheap.</span></h2>
+  <p class="text-lead text-fg-muted r d2 mt-4 max-w-mid">
     Most deck tools make you install a pipeline to edit a sentence. This one makes the sentence the file.
   </p>
 
-  <div class="grid-3 mt-l r d3">
+  <div class="grid grid-cols-3 gap-6 mt-12 r d3">
     <template x-for="[k, h, p] in stats">
-      <div class="card" style="padding: 38px 42px">
+      <div class="card px-[42px] py-[38px]">
         <p class="stat-value" x-text="k"></p>
         <p class="stat-label" x-text="h"></p>
-        <p class="small muted mt-s" x-text="p"></p>
+        <p class="text-small text-fg-muted mt-4" x-text="p"></p>
       </div>
     </template>
   </div>
 
-  <div class="grid-2 mt-auto">
+  <div class="grid grid-cols-2 gap-6 mt-auto">
     <div class="card r d4">
-      <span class="label muted">The usual way</span>
-      <p class="h4 mt-xs" style="font-weight: 400; opacity: 0.85">
+      <span class="label text-fg-muted">The usual way</span>
+      <p class="text-h4 mt-2.5 font-normal opacity-85">
         Install, compile, serve, then look at the slide. Every step can break before the talk.
       </p>
     </div>
-    <div class="card accent r d5">
+    <div class="card card-accent r d5">
       <span class="label">This way</span>
-      <p class="h4 mt-xs" style="font-weight: 400">
+      <p class="text-h4 mt-2.5 font-normal">
         Edit the file, refresh the browser. Host the folder anywhere that serves files.
       </p>
     </div>

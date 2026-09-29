@@ -3,7 +3,7 @@
      canvas edge. Names come from config.js through $store.deck. -->
 <section data-section="Introduction" data-title="Cover" data-tone="deep" data-bare>
   <div class="cover-frame"></div>
-  <div class="stack h-full relative">
+  <div class="flex flex-col h-full relative">
     <div class="lockup r d1">
       <img src="assets/logo-dark.svg" alt="Stage" />
       <span class="x">×</span>
@@ -16,12 +16,12 @@
     </div>
 
     <div class="my-auto">
-      <div class="accent-bar r d2 mb-m"></div>
-      <h1 class="display r d2 w-wide">
+      <div class="accent-bar r d2 mb-8"></div>
+      <h1 class="text-display r d2 max-w-wide">
         Slides are just pages.
         <span class="text-gradient">Ship them as files.</span>
       </h1>
-      <p class="lead r d3 mt-l w-mid">
+      <p class="text-lead text-fg-muted r d3 mt-12 max-w-mid">
         A fixed 1920×1080 stage, a handful of CSS classes, one file per slide.
         No bundler, no build step, and a PDF that matches the screen.
       </p>
@@ -30,9 +30,9 @@
     <div class="byline r d4" x-data="{ p: $store.deck.presenter }">
       <span>
         <b x-text="p.name"></b> · <span x-text="p.role"></span>
-        <span style="margin: 0 14px; opacity: 0.4">|</span><span x-text="p.email"></span>
+        <span class="mx-3.5 opacity-40">|</span><span x-text="p.email"></span>
       </span>
-      <span class="row gap-s">
+      <span class="flex items-center gap-4">
         <span x-text="$store.deck.date"></span>
         <span class="pill" x-text="p.site"></span>
       </span>

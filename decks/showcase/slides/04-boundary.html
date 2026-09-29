@@ -8,30 +8,30 @@
     ours: ['The 1920×1080 stage', 'Keyboard and touch navigation', 'Reveal animations', 'Print preview and PDF pages', 'Code highlighting'],
   }"
 >
-  <h2 class="h2 r d2 w-wide">You write slides. <span class="text-gradient">The kit runs the stage.</span></h2>
+  <h2 class="text-h2 r d2 max-w-wide">You write slides. <span class="text-gradient">The kit runs the stage.</span></h2>
 
-  <div class="grid-split grow mt-l items-stretch">
-    <div class="card stack r d3">
-      <div class="accent-bar mb-s"></div>
+  <div class="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-6 flex-1 min-h-0 min-w-0 mt-12 items-stretch">
+    <div class="card flex flex-col r d3">
+      <div class="accent-bar mb-4"></div>
       <span class="label">You write</span>
-      <div class="bar-list grow justify-evenly mt-m">
+      <div class="bar-list flex-1 min-h-0 min-w-0 justify-evenly mt-8">
         <template x-for="y in yours"><p x-text="y"></p></template>
       </div>
     </div>
 
-    <div class="center r d4" style="width: 290px">
-      <div class="card accent text-center" style="padding: 30px 24px">
+    <div class="flex w-[290px] items-center justify-center r d4">
+      <div class="card card-accent px-6 py-7.5 text-center">
         <span class="label">The contract</span>
-        <p class="h4 mt-s">One HTML file</p>
-        <p class="small muted mt-xs">per slide, holding</p>
-        <p class="h4 mt-xs mono" style="font-size: 26px">&lt;section&gt;</p>
+        <p class="text-h4 mt-4">One HTML file</p>
+        <p class="text-small text-fg-muted mt-2.5">per slide, holding</p>
+        <p class="text-h4 text-[26px] mt-2.5 font-mono">&lt;section&gt;</p>
       </div>
     </div>
 
-    <div class="card brand stack r d5">
-      <div class="accent-bar mb-s"></div>
+    <div class="card card-brand flex flex-col r d5">
+      <div class="accent-bar mb-4"></div>
       <span class="label">The kit runs</span>
-      <div class="bar-list accent grow justify-evenly mt-m">
+      <div class="bar-list bar-list-accent flex-1 min-h-0 min-w-0 justify-evenly mt-8">
         <template x-for="o in ours"><p x-text="o"></p></template>
       </div>
     </div>

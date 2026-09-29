@@ -1,180 +1,183 @@
 /* ============================================================
    DECK CHROME — progress bar, slide counter, keyboard help and
    the print-preview mode. None of it ever prints (see stage.css).
+   It sits in @layer components, above the stage mechanics in base.
    ============================================================ */
 
-.deck-chrome {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1000;
-  pointer-events: none;
-  font-family: var(--font-mono);
-}
-.deck-progress {
-  height: 4px;
-  background: rgba(6, 78, 59, 0.18);
-}
-.deck-progress span {
-  display: block;
-  height: 100%;
-  width: 0;
-  background: var(--accent);
-  transition: width 0.3s ease;
-}
-.deck-meta {
-  position: absolute;
-  right: 22px;
-  bottom: 14px;
-  font-size: 15px;
-  letter-spacing: 0.14em;
-  color: rgba(107, 99, 85, 0.85);
-}
-.deck-meta b {
-  color: var(--ink);
-  font-weight: 500;
-}
-/* on a deep slide the chrome flips to light ink */
-.deck-viewport.on-deep .deck-meta {
-  color: rgba(143, 161, 152, 0.9);
-}
-.deck-viewport.on-deep .deck-meta b {
-  color: var(--deep-ink);
-}
+@layer components {
+  .deck-chrome {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    pointer-events: none;
+    font-family: var(--font-mono);
+  }
+  .deck-progress {
+    height: 4px;
+    background: rgba(6, 78, 59, 0.18);
+  }
+  .deck-progress span {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--color-accent);
+    transition: width 0.3s ease;
+  }
+  .deck-meta {
+    position: absolute;
+    right: 22px;
+    bottom: 14px;
+    font-size: 15px;
+    letter-spacing: 0.14em;
+    color: rgba(107, 99, 85, 0.85);
+  }
+  .deck-meta b {
+    color: var(--color-ink);
+    font-weight: 500;
+  }
+  /* on a deep slide the chrome flips to light ink */
+  .deck-viewport.on-deep .deck-meta {
+    color: rgba(143, 161, 152, 0.9);
+  }
+  .deck-viewport.on-deep .deck-meta b {
+    color: var(--color-deep-ink);
+  }
 
-/* keyboard-help card, toggled with ? */
-.deck-help {
-  position: fixed;
-  inset: 0;
-  z-index: 1100;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  background: rgba(6, 26, 20, 0.72);
-  font-family: var(--font-mono);
-}
-.deck-help.open {
-  display: flex;
-}
-.deck-help table {
-  background: var(--card);
-  color: var(--ink);
-  border-radius: 14px;
-  padding: 28px 34px;
-  font-size: 15px;
-  line-height: 2.1;
-  border-collapse: separate;
-}
-.deck-help td:first-child {
-  color: var(--brand);
-  font-weight: 600;
-  padding-right: 26px;
-  white-space: nowrap;
-}
+  /* keyboard-help card, toggled with ? */
+  .deck-help {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(6, 26, 20, 0.72);
+    font-family: var(--font-mono);
+  }
+  .deck-help.open {
+    display: flex;
+  }
+  .deck-help table {
+    background: var(--color-card);
+    color: var(--color-ink);
+    border-radius: 14px;
+    padding: 28px 34px;
+    font-size: 15px;
+    line-height: 2.1;
+    border-collapse: separate;
+  }
+  .deck-help td:first-child {
+    color: var(--color-brand);
+    font-weight: 600;
+    padding-right: 26px;
+    white-space: nowrap;
+  }
 
-/* ============================================================
+  /* ============================================================
    PRINT PREVIEW — P, the toolbar button, or ?print in the URL.
    Every slide laid out as the PDF will paginate it: one 16:9 page
    each, reveals forced visible, scaled to the window with CSS zoom
    (print-preview.js sets --preview-zoom). Click a page to jump to
    that slide in presenting mode.
    ============================================================ */
-html.print-preview,
-html.print-preview body {
-  overflow: auto;
-  height: auto;
-}
-.print-preview .deck-viewport {
-  position: static;
-  overflow: visible;
-  min-height: 100vh;
-  padding: 88px 0 64px;
-}
-.print-preview .deck-stage {
-  position: relative;
-  width: 1920px;
-  height: auto;
-  margin: 0 auto;
-  transform: none !important;
-  zoom: var(--preview-zoom, 0.5);
-  background: none;
-  overflow: visible;
-}
-.print-preview .slide {
-  position: relative;
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
-  margin: 0 0 56px;
-  cursor: zoom-in;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
-}
-.print-preview .slide * {
-  pointer-events: none;
-}
-.print-preview .deck-chrome {
-  display: none;
-}
+  html.print-preview,
+  html.print-preview body {
+    overflow: auto;
+    height: auto;
+  }
+  .print-preview .deck-viewport {
+    position: static;
+    overflow: visible;
+    min-height: 100vh;
+    padding: 88px 0 64px;
+  }
+  .print-preview .deck-stage {
+    position: relative;
+    width: 1920px;
+    height: auto;
+    margin: 0 auto;
+    transform: none !important;
+    zoom: var(--preview-zoom, 0.5);
+    background: none;
+    overflow: visible;
+  }
+  .print-preview .slide {
+    position: relative;
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    margin: 0 0 56px;
+    cursor: zoom-in;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+  }
+  .print-preview .slide * {
+    pointer-events: none;
+  }
+  .print-preview .deck-chrome {
+    display: none;
+  }
 
-/* page number badge, preview only */
-.preview-tag {
-  display: none;
-}
-.print-preview .preview-tag {
-  display: block;
-  position: absolute;
-  right: 28px;
-  bottom: 22px;
-  z-index: 5;
-  padding: 8px 18px;
-  border-radius: 999px;
-  background: rgba(6, 26, 20, 0.78);
-  color: #f2f4ef;
-  font: 500 22px/1 var(--font-mono);
-  letter-spacing: 0.12em;
-}
+  /* page number badge, preview only */
+  .preview-tag {
+    display: none;
+  }
+  .print-preview .preview-tag {
+    display: block;
+    position: absolute;
+    right: 28px;
+    bottom: 22px;
+    z-index: 5;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: rgba(6, 26, 20, 0.78);
+    color: #f2f4ef;
+    font: 500 22px/1 var(--font-mono);
+    letter-spacing: 0.12em;
+  }
 
-/* the toolbar across the top of the preview */
-.preview-bar {
-  display: none;
-}
-.print-preview .preview-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1200;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  height: 60px;
-  padding: 0 24px;
-  background: rgba(6, 26, 20, 0.94);
-  border-bottom: 2px solid var(--accent);
-  color: #f2f4ef;
-  font: 14px/1 var(--font-mono);
-  letter-spacing: 0.08em;
-  backdrop-filter: blur(6px);
-}
-.preview-bar .grow {
-  flex: 1;
-}
-.preview-bar .hint {
-  color: #8fa198;
-}
-.preview-bar button {
-  font: 600 14px/1 var(--font-mono);
-  letter-spacing: 0.08em;
-  padding: 11px 18px;
-  border-radius: 8px;
-  border: 1px solid rgba(190, 242, 100, 0.5);
-  background: transparent;
-  color: #f2f4ef;
-  cursor: pointer;
-}
-.preview-bar button.primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #063e2e;
+  /* the toolbar across the top of the preview */
+  .preview-bar {
+    display: none;
+  }
+  .print-preview .preview-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1200;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    height: 60px;
+    padding: 0 24px;
+    background: rgba(6, 26, 20, 0.94);
+    border-bottom: 2px solid var(--color-accent);
+    color: #f2f4ef;
+    font: 14px/1 var(--font-mono);
+    letter-spacing: 0.08em;
+    backdrop-filter: blur(6px);
+  }
+  .preview-bar .grow {
+    flex: 1;
+  }
+  .preview-bar .hint {
+    color: #8fa198;
+  }
+  .preview-bar button {
+    font: 600 14px/1 var(--font-mono);
+    letter-spacing: 0.08em;
+    padding: 11px 18px;
+    border-radius: 8px;
+    border: 1px solid rgba(190, 242, 100, 0.5);
+    background: transparent;
+    color: #f2f4ef;
+    cursor: pointer;
+  }
+  .preview-bar button.primary {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #063e2e;
+  }
 }

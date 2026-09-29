@@ -5,162 +5,156 @@
    to the viewport. Content never reflows per device, so what you
    see on a laptop is exactly what lands on the projector and in
    the exported PDF. Theming lives in theme.css.
+
+   Everything here sits in @layer base, after Tailwind's preflight,
+   so a utility on a slide still wins over it.
    ============================================================ */
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+@layer base {
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #061a14);
+  }
 
-html,
-body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  overflow: hidden;
-  background: var(--stage-bg, #061a14);
-}
+  /* Full-window deck viewport (the letterbox around the stage) */
+  .deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #061a14);
+  }
 
-/* Full-window deck viewport (the letterbox around the stage) */
-.deck-viewport {
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-  background: var(--stage-bg, #061a14);
-}
+  /* Fixed 1920×1080 design canvas. nav.js sets translate(...) scale(...). */
+  .deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--color-paper);
+  }
 
-/* Fixed 1920×1080 design canvas. nav.js sets translate(...) scale(...). */
-.deck-stage {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 1920px;
-  height: 1080px;
-  overflow: hidden;
-  transform-origin: 0 0;
-  background: var(--slide-bg, #faf8f3);
-}
-
-/* Slides stack inside the fixed stage; only .active is shown.
+  /* Slides stack inside the fixed stage; only .active is shown.
    visibility/opacity (NOT display) so a layout class on a slide can
    never reveal all of them at once. */
-.slide {
-  position: absolute;
-  inset: 0;
-  width: 1920px;
-  height: 1080px;
-  overflow: hidden;
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
-  background: var(--slide-bg, #faf8f3);
-}
+  .slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
 
-.slide.active {
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
-  z-index: 1;
-}
+  .slide.active {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+  }
 
-/* The padded frame every non-full slide gets (see loader.js). */
-.frame {
-  position: absolute;
-  top: 76px;
-  right: 104px;
-  bottom: 70px;
-  left: 104px;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-}
+  /* The padded frame every non-full slide gets (see loader.js). */
+  .frame {
+    position: absolute;
+    top: 76px;
+    right: 104px;
+    bottom: 70px;
+    left: 104px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+  }
 
-/* A full slide owns all 1920×1080; keep its content above the aura. */
-.full-slot {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
+  /* A full slide owns all 1920×1080; keep its content above the aura. */
+  .full-slot {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
 
-/* Keep media inside authored bounds */
-img,
-video,
-canvas,
-svg {
-  max-width: 100%;
-  max-height: 100%;
-}
+  /* Keep media inside authored bounds (preflight caps the width) */
+  .slide :is(img, video, canvas, svg) {
+    max-height: 100%;
+  }
 
-/* ============================================================
+  /* ============================================================
    PRINT / PDF EXPORT — one 1920×1080 page per slide.
    Chrome → File → Print → destination "Save as PDF",
    margins "None", "Background graphics" ON.
    @page matches the canvas exactly: no letterboxing, no scaling.
    These rules also win over print-preview mode (see chrome.css).
    ============================================================ */
-@media print {
-  @page {
-    size: 1920px 1080px;
-    margin: 0;
+  @media print {
+    @page {
+      size: 1920px 1080px;
+      margin: 0;
+    }
+    /* keep the ink, accents and card fills in the PDF */
+    html {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    html,
+    body {
+      width: 1920px;
+      height: auto;
+      overflow: visible !important;
+      background: #fff;
+    }
+    .deck-viewport {
+      position: static !important;
+      overflow: visible !important;
+      padding: 0 !important;
+      background: #fff !important;
+    }
+    .deck-stage {
+      position: static !important;
+      width: auto !important;
+      height: auto !important;
+      transform: none !important;
+      zoom: 1 !important;
+      background: none !important;
+    }
+    .slide {
+      position: relative !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      width: 1920px;
+      height: 1080px;
+      margin: 0 !important;
+      box-shadow: none !important;
+      break-after: page;
+      page-break-after: always;
+    }
+    .slide:last-child {
+      break-after: auto;
+      page-break-after: auto;
+    }
+    /* presenter-only furniture never prints */
+    .deck-chrome,
+    .deck-help,
+    .preview-bar,
+    .preview-tag {
+      display: none !important;
+    }
   }
-  /* keep the ink, accents and card fills in the PDF */
-  html {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-  html,
-  body {
-    width: 1920px;
-    height: auto;
-    overflow: visible !important;
-    background: #fff;
-  }
-  .deck-viewport {
-    position: static !important;
-    overflow: visible !important;
-    padding: 0 !important;
-    background: #fff !important;
-  }
-  .deck-stage {
-    position: static !important;
-    width: auto !important;
-    height: auto !important;
-    transform: none !important;
-    zoom: 1 !important;
-    background: none !important;
-  }
-  .slide {
-    position: relative !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    width: 1920px;
-    height: 1080px;
-    margin: 0 !important;
-    box-shadow: none !important;
-    break-after: page;
-    page-break-after: always;
-  }
-  .slide:last-child {
-    break-after: auto;
-    page-break-after: auto;
-  }
-  /* presenter-only furniture never prints */
-  .deck-chrome,
-  .deck-help,
-  .preview-bar,
-  .preview-tag {
-    display: none !important;
-  }
-}
 
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.2s !important;
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.2s !important;
+    }
   }
 }

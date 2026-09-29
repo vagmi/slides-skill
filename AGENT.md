@@ -4,7 +4,8 @@ This repo is a skill for building **presentation decks as static files**.
 A deck is a folder of HTML fragments, one per slide, on a fixed 1920×1080
 stage. The stage scales to any screen and prints to a PDF with one slide per
 page. There is no build step, no bundler and no `npm install`. The engine
-is plain ES modules. Alpine.js and highlight.js load from a CDN.
+is plain ES modules. Slides are styled with **Tailwind CSS v4 utilities**:
+the Tailwind browser build, Alpine.js and highlight.js load from a CDN.
 
 It was extracted from an Astro + Tailwind sales deck. The visual system (the
 stage, the slide frame, the two surfaces, the reveals and the print pipeline)
@@ -26,13 +27,13 @@ AGENT.md                 ← you are here
 index.html               ← lists the decks (add a <li> per new deck)
 docs/                    ← how to use the skill; start at docs/llms.txt
 engine/                  ← the shared engine. Do not fork it per deck
-  deck.css               ← the one stylesheet a deck links (imports the rest)
-  theme.css              ← design tokens, paper/deep surfaces, reveals
+  theme.css              ← Tailwind @theme tokens, paper/deep surfaces, reveals
   stage.css              ← 1920×1080 stage + @media print (one slide per page)
-  type.css · components.css · media.css · layout.css · chrome.css
+  components.css · media.css · chrome.css   ← component classes (Tailwind source)
   deck.js                ← entry: start({ rail, store, slides })
+  styles.js              ← loads Tailwind and compiles the CSS files above
   loader.js · nav.js · print-preview.js · code.js · video.js · fit-check.js
-  libs.js                ← pinned CDN imports (Alpine, highlight.js)
+  libs.js                ← pinned CDN code (Alpine, highlight.js, Tailwind)
 decks/
   starter/               ← copy this folder to begin a new deck
   showcase/              ← one slide per layout pattern; copy from it
@@ -79,8 +80,9 @@ with the deck page at the canvas root and the engine beside it:
    closest pattern from `decks/showcase/slides/` with `read_library_file`
    first (see [docs/patterns.md](docs/patterns.md)).
 3. Write `index.html` **last**, because the canvas opens as soon as it exists.
-   Start from `decks/starter/index.html`, but import `./engine/deck.js` and
-   link `engine/deck.css`, not `../../engine/`.
+   Start from `decks/starter/index.html`, but import `./engine/deck.js`,
+   not `../../engine/deck.js`. There is no stylesheet to link: the engine
+   loads Tailwind and its own CSS.
 4. Links inside a canvas must name the file: `decks/q3/index.html`, never
    `decks/q3/`. A path ending in `/` does not resolve.
 5. Paths may be at most four levels deep inside the canvas. `slides/NN.html`
@@ -88,13 +90,15 @@ with the deck page at the canvas root and the engine beside it:
 
 ## Hard rules
 
-- **Design at 1920×1080.** Every size is in stage pixels. Never use `vw`,
-  `vh`, `rem` media queries or responsive breakpoints on a slide.
+- **Design at 1920×1080.** Every size is in stage pixels. Never use
+  responsive variants (`sm:`, `md:`, `lg:` …), `dark:`, or viewport units
+  (`h-screen`, `vw`, `vh`) on a slide. They follow the browser window, not
+  the stage.
 - **One `<section>` per slide file**, and nothing else. Scripts inside a
   fragment do not run. Put data in `x-data` or in `config.js`.
-- **No build tooling.** Do not add Vite, npm packages, Tailwind or a
-  bundler. Third-party code comes only through `engine/libs.js` as a
-  pinned CDN ES module.
+- **No build tooling.** Do not add Vite, npm packages, the Tailwind CLI or a
+  bundler. Tailwind runs as its browser build. Third-party code comes only
+  through `engine/libs.js` as a pinned CDN URL.
 - **No file over 300 lines.** That covers engine files, slides and docs. If a
   slide grows that long, it holds too much. Split it into two slides.
 - **Visual slides only.** Do not add speaker notes, scripts or run-sheets.
@@ -103,11 +107,16 @@ with the deck page at the canvas root and the engine beside it:
   clipped.
 - **Content must fit the frame.** Slides clip their overflow and never
   scroll. `Deck.checkFit()` must list nothing.
-- Use the classes in [docs/components.md](docs/components.md) and
-  [docs/layout.md](docs/layout.md) before inline styles. Use `style=""` only
-  for a one-off number.
-- Restyle through the tokens in [docs/theming.md](docs/theming.md), never by
-  editing component CSS for one deck.
+- Style slides with Tailwind utilities and the component classes in
+  [docs/components.md](docs/components.md) (`card`, `label`, `pill` …); see
+  [docs/layout.md](docs/layout.md) for layout recipes. Use arbitrary values
+  (`w-[290px]`, `text-[56px]`) for one-off numbers, not `style=""`.
+- Colour with the theme colours (`text-fg`, `text-fg-muted`, `bg-surface`,
+  `border-edge`, `bg-mark`, `text-label`), never Tailwind's stock palette
+  (`text-gray-500`) or hex. They follow the deck's theme and flip on deep
+  slides.
+- Restyle through the `--color-*` tokens in [docs/theming.md](docs/theming.md),
+  never by editing engine CSS for one deck.
 
 ## Writing style for slide copy
 

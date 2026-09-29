@@ -7,7 +7,7 @@
   Serve the repo root with any static server, e.g. `python3 -m http.server`,
   then open http://localhost:8000/decks/showcase/
 -->
-<html lang="en">
+<html lang="en" style="background: #061a14">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,7 +19,8 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../../engine/deck.css" />
+    <!-- Tailwind (browser build) and the engine CSS are loaded by engine/deck.js.
+         Rebrand here with :root { --color-brand: …; } (docs/theming.md). -->
   </head>
   <body>
     <script>

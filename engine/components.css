@@ -1,223 +1,163 @@
 /* ============================================================
-   COMPONENTS — cards, lists, numbered rows, stats, pills, flows,
-   quotes and tables. Every colour comes from the surface aliases
-   in theme.css (--fg, --fg-muted, --card-bg, --border, --label,
-   --mark …), so each class looks right on paper and deep slides.
-   Type scale and markers live in type.css.
+   COMPONENTS — the patterns a Tailwind utility string would spell
+   out again on every slide: labels, markers, cards, lists,
+   numbered rows, stats, pills, flows, quotes and tables.
+
+   They sit in @layer components, so a utility on the same element
+   wins: <div class="card p-6"> overrides the card's padding.
+   Colours come from the surface-aware tokens in theme.css (fg,
+   fg-muted, surface, edge, label, mark, wash), so every class
+   reads right on paper and on deep slides.
    ============================================================ */
 
-/* —— cards —— */
-.card {
-  position: relative;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: var(--card-bg);
-  padding: 34px 40px;
-}
-.card.tight { padding: 18px 26px; border-radius: 10px; }
-.card.loose { padding: 44px 50px; }
-/* highlighted: the answer, the point, "ours" */
-.card.accent {
-  border: 2px solid color-mix(in srgb, var(--mark) 50%, transparent);
-  background: var(--wash);
-}
-/* brand wash fading into the card colour */
-.card.brand {
-  border-color: color-mix(in srgb, var(--brand) 25%, transparent);
-  background: linear-gradient(to bottom, var(--wash), var(--card-bg));
-}
-.slide.deep .card.brand {
-  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
-}
-.card.ghost {
-  background: transparent;
-  border-style: dashed;
-}
-.card.warn {
-  border: 2px solid color-mix(in srgb, var(--warn) 45%, transparent);
-  background: color-mix(in srgb, var(--warn) 7%, var(--card-bg));
-}
-.card.warn .label { color: var(--warn); }
+@layer components {
+  /* —— labels and markers —— */
 
-/* —— lists —— */
-/* each item hangs off a left rule; .accent turns the rule lime */
-.bar-list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.bar-list > * {
-  border-left: 3px solid var(--border);
-  padding-left: 22px;
-  font-size: 30px;
-  line-height: 1.2;
-  font-weight: 600;
-}
-.bar-list.accent > * { border-left-color: var(--mark); }
+  /* mono eyebrow-style label: "THE CONTRACT", "OURS", "STEP 1" */
+  .label {
+    @apply font-mono text-[20px] tracking-[0.18em] text-label uppercase;
+  }
 
-/* small accent dot in front of each item */
-.dot-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  font-size: 28px;
-  line-height: 1.35;
-}
-.dot-list > * {
-  position: relative;
-  padding-left: 34px;
-}
-.dot-list > *::before {
-  content: "";
-  position: absolute;
-  left: 4px;
-  top: 0.5em;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--mark);
-}
+  /* headline gradient — wrap the words that carry the point */
+  .text-gradient {
+    background-image: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 
-/* numbered rows — agendas, steps, running orders */
-.numbered {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.numbered > * {
-  display: flex;
-  align-items: center;
-  gap: 36px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--card-bg);
-  padding: 24px 38px;
-  font-size: 36px;
-  line-height: 1.1;
-  font-weight: 600;
-}
-.numbered .num {
-  width: 60px;
-  flex-shrink: 0;
-  font-family: var(--font-mono);
-  font-size: 26px;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  color: var(--label);
-}
-.numbered .num::after {
-  content: "";
-  display: inline-block;
-  width: 1px;
-  height: 42px;
-  margin-left: 30px;
-  vertical-align: middle;
-  background: var(--border);
-}
-.numbered .aside {
-  margin-left: auto;
-  font-size: 26px;
-  font-weight: 400;
-  color: var(--fg-muted);
-}
+  /* inline code inside prose */
+  .slide code:not(pre code) {
+    @apply font-mono text-[0.9em];
+  }
 
-/* —— stats —— */
-.stat-value {
-  font-size: 136px;
-  line-height: 0.86;
-  font-weight: 700;
-  letter-spacing: -0.05em;
-  color: var(--brand);
-}
-.slide.deep .stat-value { color: var(--accent); }
-.stat-label {
-  margin-top: 16px;
-  font-family: var(--font-mono);
-  font-size: 26px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
+  .accent-bar {
+    @apply h-2 w-16 rounded-full bg-mark;
+  }
+  .tick {
+    @apply h-[3px] w-12 rounded-full bg-mark;
+  }
+  .rule {
+    @apply h-0 border-t border-edge;
+  }
 
-/* —— pill —— */
-.pill {
-  display: inline-block;
-  border: 1px solid color-mix(in srgb, var(--mark) 60%, transparent);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--mark) 12%, transparent);
-  padding: 8px 20px;
-  font-family: var(--font-mono);
-  font-size: 22px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--fg-2);
-}
+  /* —— cards —— */
+  .card {
+    @apply relative rounded-[14px] border border-edge bg-surface px-10 py-[34px];
+  }
+  /* highlighted: the answer, the point, "ours" */
+  .card-accent {
+    @apply border-2 border-mark/50 bg-wash;
+  }
+  /* brand wash fading into the card colour */
+  .card-brand {
+    @apply border-brand/25 bg-linear-to-b from-wash to-surface;
+  }
+  .slide.deep .card-brand {
+    @apply border-accent/40;
+  }
+  .card-ghost {
+    @apply border-dashed bg-transparent;
+  }
+  .card-warn {
+    @apply border-2 border-warn/45;
+    background: color-mix(in srgb, var(--color-warn) 7%, var(--color-surface));
+  }
+  .card-warn .label {
+    @apply text-warn;
+  }
 
-/* —— flow: boxes joined by arrows ——
-   <div class="flow"><div class="step">…</div><div class="step">…</div></div>
-   The arrows are drawn by CSS, so an x-for can render the steps. */
-.flow {
-  display: flex;
-  align-items: stretch;
-  gap: 36px;
-}
-.flow > .step {
-  position: relative;
-  flex: 1 1 0;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--card-bg);
-  padding: 14px 22px;
-}
-.flow > .step:not(:last-child)::after {
-  content: "→";
-  position: absolute;
-  top: 50%;
-  right: -29px;
-  transform: translateY(-50%);
-  font-size: 26px;
-  line-height: 1;
-  color: var(--mark);
-}
+  /* —— lists —— */
+  /* each item hangs off a left rule; .bar-list-accent turns it lime */
+  .bar-list {
+    @apply flex flex-col gap-3.5;
+  }
+  .bar-list > * {
+    @apply border-l-[3px] border-edge pl-[22px] text-[30px]/[1.2] font-semibold;
+  }
+  .bar-list-accent > * {
+    @apply border-mark;
+  }
 
-/* —— quote —— */
-.quote {
-  border-left: 8px solid var(--mark);
-  padding-left: 48px;
-  font-size: 64px;
-  line-height: 1.14;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-.quote cite {
-  display: block;
-  margin-top: 30px;
-  font-family: var(--font-mono);
-  font-size: 24px;
-  font-style: normal;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--fg-muted);
-}
+  /* small accent dot in front of each item */
+  .dot-list {
+    @apply flex flex-col gap-4 text-[28px]/[1.35];
+  }
+  .dot-list > * {
+    @apply relative pl-[34px];
+  }
+  .dot-list > *::before {
+    content: "";
+    @apply absolute top-[0.5em] left-1 size-3 rounded-full bg-mark;
+  }
 
-/* —— table —— */
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 26px;
-  line-height: 1.3;
+  /* numbered rows — agendas, steps, running orders */
+  .numbered {
+    @apply flex flex-col gap-4;
+  }
+  .numbered > :not(template) {
+    @apply flex items-center gap-9 rounded-xl border border-edge bg-surface px-[38px] py-6 text-[36px]/[1.1] font-semibold;
+  }
+  .numbered .num {
+    @apply w-[60px] shrink-0 font-mono text-[26px] font-normal tracking-[0.06em] text-label;
+  }
+  .numbered .num::after {
+    content: "";
+    @apply ml-[30px] inline-block h-[42px] w-px bg-edge align-middle;
+  }
+  .numbered .aside {
+    @apply ml-auto text-[26px] font-normal text-fg-muted;
+  }
+
+  /* —— stats —— */
+  .stat-value {
+    @apply text-[136px]/[0.86] font-bold tracking-[-0.05em] text-brand;
+  }
+  .slide.deep .stat-value {
+    @apply text-accent;
+  }
+  .stat-label {
+    @apply mt-4 font-mono text-[26px] tracking-[0.16em] uppercase;
+  }
+
+  /* —— pill —— */
+  .pill {
+    @apply inline-block rounded-full border border-mark/60 bg-mark/12 px-5 py-2 font-mono text-[22px] tracking-[0.16em] text-fg-2 uppercase;
+  }
+
+  /* —— flow: boxes joined by arrows ——
+     <div class="flow"><div class="step">…</div><div class="step">…</div></div>
+     The arrows are drawn by CSS, so an x-for can render the steps. */
+  .flow {
+    @apply flex items-stretch gap-9;
+  }
+  .flow > .step {
+    @apply relative flex-1 rounded-[10px] border border-edge bg-surface px-[22px] py-3.5;
+  }
+  .flow > .step:not(:last-child)::after {
+    content: "→";
+    @apply absolute top-1/2 -right-[29px] -translate-y-1/2 text-[26px] leading-none text-mark;
+  }
+
+  /* —— quote —— */
+  .quote {
+    @apply border-l-8 border-mark pl-12 text-[64px]/[1.14] font-semibold tracking-[-0.02em];
+  }
+  .quote cite {
+    @apply mt-[30px] block font-mono text-[24px] tracking-[0.14em] text-fg-muted uppercase not-italic;
+  }
+
+  /* —— table —— */
+  .table {
+    @apply w-full border-collapse text-[26px]/[1.3];
+  }
+  .table th {
+    @apply border-b-2 border-edge pr-5 pb-4 text-left font-mono text-[19px]/[1.2] font-normal tracking-[0.16em] text-label uppercase;
+  }
+  .table td {
+    @apply border-b border-edge py-[18px] pr-5 align-top;
+  }
+  .table tr.hl td {
+    @apply bg-wash;
+  }
 }
-.table th {
-  padding: 0 20px 16px 0;
-  text-align: left;
-  font: 400 19px/1.2 var(--font-mono);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--label);
-  border-bottom: 2px solid var(--border);
-}
-.table td {
-  padding: 18px 20px 18px 0;
-  border-bottom: 1px solid var(--border);
-  vertical-align: top;
-}
-.table tr.hl td { background: var(--wash); }

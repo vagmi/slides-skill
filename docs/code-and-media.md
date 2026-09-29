@@ -42,11 +42,11 @@ at `sm` in a half-width panel is the practical limit.
 A callout that belongs to a panel goes directly under it:
 
 ```html
-<div class="stack gap-s">
+<div class="flex flex-col gap-4">
   <figure class="code-panel sm" data-lang="js">…</figure>
-  <div class="card accent" style="padding:20px 28px">
+  <div class="card card-accent px-7 py-5">
     <p class="label">The line that matters</p>
-    <p class="small mt-xs"><code>await urai.complete()</code> returns the result.</p>
+    <p class="text-small mt-2.5"><code>await urai.complete()</code> returns the result.</p>
   </div>
 </div>
 ```
@@ -61,7 +61,7 @@ title card.
   <div class="video-slide" data-src="assets/demo.mp4"
        data-w="1920" data-h="1080" data-note="2 minutes, no sound">
     <h2 class="title">Watch it <span class="text-gradient">work</span>.</h2>
-    <p class="lead">One sentence of setup.</p>
+    <p class="text-lead text-fg-muted">One sentence of setup.</p>
   </div>
 </section>
 ```
@@ -107,8 +107,8 @@ title card.
   ```
 
 - For a full-bleed image, use a `data-full` slide with
-  `<img class="fill" style="object-fit:cover;width:100%;height:100%">`.
+  `<img class="absolute inset-0 size-full object-cover">`.
 - Media inside a slide is capped at `max-width/max-height: 100%` of its box.
 - Diagrams: inline `<svg>` scales perfectly and prints sharp. Colour it with
-  `currentColor` or with `var(--accent)` and the other tokens, so it follows
+  `currentColor` or with `var(--color-accent)` and the other tokens, so it follows
   the surface.

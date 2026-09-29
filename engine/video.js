@@ -6,7 +6,7 @@
        <div class="video-slide" data-src="assets/demo.mp4"
             data-w="1920" data-h="1080" data-note="90 seconds, no sound">
          <h2 class="title">Watch it <span class="text-gradient">work</span>.</h2>
-         <p class="lead">One sentence of setup.</p>
+         <p class="text-lead text-fg-muted">One sentence of setup.</p>
        </div>
      </section>
 
@@ -28,7 +28,7 @@ import { W, H } from "./nav.js";
 const MARGIN = 52;
 const PLAY =
   `<svg width="36" height="42" viewBox="0 0 36 42" aria-hidden="true">` +
-  `<path d="M2 2 L34 21 L2 40 Z" fill="var(--brand)"/></svg>`;
+  `<path d="M2 2 L34 21 L2 40 Z" fill="var(--color-brand)"/></svg>`;
 
 function expand(box, rail) {
   const d = box.dataset;
@@ -47,9 +47,9 @@ function expand(box, rail) {
   overlay.innerHTML =
     `<span class="scrim" aria-hidden="true"></span>` +
     `<span class="frame"><span class="eyebrow"><span></span><span class="rail"></span></span>` +
-    `<span class="my-auto video-copy"><span class="accent-bar mb-m"></span></span>` +
+    `<span class="my-auto video-copy"><span class="accent-bar mb-8"></span></span>` +
     `<span class="play-row"><span class="play-btn">${PLAY}</span>` +
-    `<span class="fg">Click to play <span class="muted note"></span></span></span></span>`;
+    `<span class="text-fg">Click to play <span class="text-fg-muted note"></span></span></span></span>`;
   overlay.querySelector(".eyebrow span").textContent = section;
   overlay.querySelector(".note").textContent = "· " + (d.note || "no sound");
   overlay.querySelector(".rail").textContent = box.closest(".slide")?.dataset.rail ?? rail ?? "";

@@ -10,7 +10,7 @@
     ],
   }"
 >
-  <h2 class="h2 r d2">Three ways to ship a deck.</h2>
+  <h2 class="text-h2 r d2">Three ways to ship a deck.</h2>
   <table class="table my-auto r d3">
     <thead>
       <tr><th>Approach</th><th>Tooling</th><th>Layout</th><th>Runs on</th></tr>
@@ -18,7 +18,7 @@
     <tbody>
       <template x-for="r in rows">
         <tr :class="r.hl && 'hl'">
-          <td class="strong" x-text="r.name"></td>
+          <td class="font-semibold" x-text="r.name"></td>
           <td x-text="r.tools"></td>
           <td x-text="r.layout"></td>
           <td x-text="r.host"></td>
@@ -26,5 +26,5 @@
       </template>
     </tbody>
   </table>
-  <p class="small muted r d4">Pick the one whose failure mode you can live with on the day.</p>
+  <p class="text-small text-fg-muted r d4">Pick the one whose failure mode you can live with on the day.</p>
 </section>
