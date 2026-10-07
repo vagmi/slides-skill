@@ -95,6 +95,9 @@
     /* —— headline gradient —— */
     --gradient: linear-gradient(100deg, #064e3b 0%, #10775a 46%, #5b9421 100%);
     --gradient-deep: linear-gradient(100deg, #bef264 0%, #7dd3a5 100%);
+    /* solid stand-ins used when printing (see .text-gradient) */
+    --gradient-solid: #10775a;
+    --gradient-deep-solid: #bef264;
 
     /* —— the aura painted in the corner of every slide —— */
     --aura: rgba(163, 230, 53, 0.13);
@@ -124,6 +127,7 @@
      ============================================================ */
   .slide {
     --grad: var(--gradient);
+    --grad-solid: var(--gradient-solid);
     background: var(--color-paper);
     font-family: var(--font-display);
     line-height: normal; /* not preflight's 1.5: text-* sizes set their own */
@@ -144,6 +148,7 @@
     --color-mark: var(--color-accent-soft);
     --color-wash: rgba(163, 230, 53, 0.08);
     --grad: var(--gradient-deep);
+    --grad-solid: var(--gradient-deep-solid);
     background: var(--color-deep);
   }
 

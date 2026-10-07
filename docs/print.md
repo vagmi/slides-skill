@@ -61,6 +61,10 @@ The print rules live in `engine/stage.css` under `@media print`:
 - The stage transform and zoom are removed, and slides become normal blocks
   with `break-after: page`.
 - `print-color-adjust: exact` keeps fills and gradients.
+- `text-gradient` prints as the solid `--grad-solid` (in `components.css`).
+  Chrome writes gradient-clipped text into the PDF correctly, but macOS
+  Preview renders it as bands and solid blocks over the words. Every other
+  gradient (auras, fills) prints as is.
 - The chrome, help overlay, preview toolbar and page badges are hidden.
 - `.r` reveals are forced to `opacity: 1` (in `theme.css`).
 

@@ -25,6 +25,14 @@
     background-clip: text;
     color: transparent;
   }
+  /* Chrome writes gradient-clipped text into the PDF correctly, but macOS
+     Preview draws it as bands and blocks. Print a solid colour instead. */
+  @media print {
+    .text-gradient {
+      background-image: none;
+      color: var(--grad-solid);
+    }
+  }
 
   /* inline code inside prose */
   .slide code:not(pre code) {

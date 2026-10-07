@@ -21,6 +21,8 @@ the deck's `index.html`:
     --color-deep: #1c0f08;
     --gradient: linear-gradient(100deg, #7c2d12, #ea580c);
     --gradient-deep: linear-gradient(100deg, #fdba74, #fb923c);
+    --gradient-solid: #c2410c;        /* print stand-in for --gradient */
+    --gradient-deep-solid: #fdba74;   /* print stand-in for --gradient-deep */
   }
 </style>
 ```
@@ -86,6 +88,7 @@ Swapping fonts means changing the Google Fonts `<link>` and
 | Token | Role |
 | --- | --- |
 | `--gradient` / `--gradient-deep` | `text-gradient` on paper / deep |
+| `--gradient-solid` / `--gradient-deep-solid` | the solid colour `text-gradient` prints as on paper / deep. Pick a colour from the middle of the matching gradient. |
 | `--aura`, `--aura-deep`, `--aura-deep-2` | the soft corner glow on slides |
 | `--code-bg`, `--code-fg`, `--code-com`, `--code-key`, `--code-str`, `--code-fn`, `--code-type`, `--code-num`, `--code-prop`, `--code-punc` | code panel colours |
 | `--font-display`, `--font-mono` | typefaces |
@@ -112,6 +115,7 @@ class works on both surfaces:
 | `--color-mark` → `bg-mark` | accent | accent-soft |
 | `--color-wash` → `bg-wash` | accent-wash | 8% lime |
 | `--grad` (not a colour) | `--gradient` | `--gradient-deep` |
+| `--grad-solid` | `--gradient-solid` | `--gradient-deep-solid` |
 
 When you write a new component, colour it with these, never with raw hex
 values or the fixed palette, so it works on both surfaces for free.

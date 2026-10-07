@@ -61,6 +61,10 @@ the point:
 <h2 class="text-h2">Reasoning is expensive. <span class="text-gradient">Execution is cheap.</span></h2>
 ```
 
+In print and PDF the gradient becomes one solid colour, `--grad-solid`.
+macOS Preview cannot draw gradient-clipped text from a Chrome PDF, so the
+engine does not ask it to. See [print.md](print.md).
+
 Inline `<code>` in prose is set in mono automatically.
 
 ## Markers
@@ -69,7 +73,7 @@ Inline `<code>` in prose is set in mono automatically.
 | --- | --- |
 | `accent-bar` | 64×8 lime pill. It sits above a headline or card title. |
 | `tick` | 48×3 lime rule. It goes between a card's title and body. |
-| `rule` | 1px hairline, on an `<hr>` or `<div>`. |
+| `rule` | 1px hairline, on an `<hr>` or an empty `<div>`. It has zero height, so text put inside it spills out of the card. For a divider with text under it, put `border-t border-edge pt-4` on the text's own element. |
 | `pill` | Mono caps in a rounded lime outline: a URL, a tag or a status. |
 | `big-num` | 260px ghost numeral or letter for section dividers. |
 
